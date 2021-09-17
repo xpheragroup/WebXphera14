@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="hr_payslip_prima">
+            <field name="name">hr.payslip.prima</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="prima" invisible="True"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_payslip_horas">
+            <field name="name">hr.payslip.horas</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='number_of_hours']" position="after">
+                    <field name="numero_horas_diurnas_ordinarias" optional="hide"/>
+                    <field name="numero_horas_nocturnas_ordinarias" optional="hide"/>
+                    <field name="numero_horas_diurnas_festivas" optional="hide"/>
+                    <field name="numero_horas_nocturnas_festivas" optional="hide"/>
+                    <field name="numero_horas_extras_ordinarias_diurnas" optional="hide"/>
+                    <field name="numero_horas_extras_ordinarias_nocturnas" optional="hide"/>
+                    <field name="numero_horas_extras_festivas_diurnas" optional="hide"/>
+                    <field name="numero_horas_extras_festivas_nocturnas" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo> 

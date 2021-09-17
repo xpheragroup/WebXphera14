@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="hr_contract_auxilios">
+            <field name="name">hr.contract.auxilios</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='main_info']" position="after">
+                    <group name="auxilios">
+                        <group name="auxilios_empresa" string="Auxilios">
+                            <field name="auxilio_transporte"/>
+                            <field name="auxilio_conectividad"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo> 

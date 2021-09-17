@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Entradas de Trabajo -->
+        <record id="hr_work_entry_type_diurna" model="hr.work.entry.type">
+            <field name="name">Diurna</field>
+            <field name="color">4</field>
+            <field name="code">IND</field>
+            <field name="is_leave" eval="False"/>
+            <field name="round_days">NO</field>
+        </record>
+
+        <record id="hr_work_entry_type_nocturna" model="hr.work.entry.type">
+            <field name="name">Nocturna</field>
+            <field name="color">8</field>
+            <field name="code">INN</field>
+            <field name="is_leave" eval="False"/>
+            <field name="round_days">NO</field>
+        </record>
+
+        <record id="hr_work_entry_horas_extra_diurnas" model="hr.work.entry.type">
+            <field name="name">Horas Extra</field>
+            <field name="color">6</field>
+            <field name="code">HE</field>
+            <field name="is_leave" eval="False"/>
+            <field name="round_days">NO</field>
+        </record>
+
+        <!-- Tiempos de Trabajo -->
+        <record id="resource_calendar_std_48h_diurna" model="resource.calendar">
+            <field name="name">Standar 48 horas/semana Diurno</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="hours_per_day">8.0</field>
+            <field name="tz">America/Bogota</field>
+            <field name="full_time_required_hours">48.0</field>
+            <field name="attendance_ids"
+                eval="[(6, 0, 0),
+                    (0, 0, {'name': 'Mañana Lunes', 'dayofweek': '0', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_diurna}),
+                    (0, 0, {'name': 'Tarde Lunes', 'dayofweek': '0', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_diurna}),
+                    (0, 0, {'name': 'Mañana Martes', 'dayofweek': '1', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_diurna}),
+                    (0, 0, {'name': 'Tarde Martes', 'dayofweek': '1', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_diurna}),
+                    (0, 0, {'name': 'Mañana Miercoles', 'dayofweek': '2', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_diurna}),
+                    (0, 0, {'name': 'Tarde Miercoles', 'dayofweek': '2', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_diurna}),
+                    (0, 0, {'name': 'Mañana Jueves', 'dayofweek': '3', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_diurna}),
+                    (0, 0, {'name': 'Tarde Jueves', 'dayofweek': '3', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_diurna}),
+                    (0, 0, {'name': 'Mañana Viernes', 'dayofweek': '4', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_diurna}),
+                    (0, 0, {'name': 'Tarde Viernes', 'dayofweek': '4', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_diurna}),
+                    (0, 0, {'name': 'Mañana Sabado', 'dayofweek': '5', 'hour_from': 8, 'hour_to': 12, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_diurna}),
+                    (0, 0, {'name': 'Tarde Sabado', 'dayofweek': '5', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_diurna})
+                ]"
+            />
+        </record>
+
+        <record id="resource_calendar_std_48h_nocturna" model="resource.calendar">
+            <field name="name">Standar 48 horas/semana Nocturna</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="hours_per_day">8.0</field>
+            <field name="tz">America/Bogota</field>
+            <field name="full_time_required_hours">48.0</field>
+            <field name="attendance_ids"
+                eval="[(6, 0, 0),
+                    (0, 0, {'name': 'Mañana Lunes', 'dayofweek': '0', 'hour_from': 0, 'hour_to': 1, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Mañana Lunes', 'dayofweek': '0', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Tarde Lunes', 'dayofweek': '0', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Mañana Martes', 'dayofweek': '1', 'hour_from': 0, 'hour_to': 1, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Mañana Martes', 'dayofweek': '1', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Tarde Martes', 'dayofweek': '1', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Mañana Miercoles', 'dayofweek': '2', 'hour_from': 0, 'hour_to': 1, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Mañana Miercoles', 'dayofweek': '2', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Tarde Miercoles', 'dayofweek': '2', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Mañana Jueves', 'dayofweek': '3', 'hour_from': 0, 'hour_to': 1, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Mañana Jueves', 'dayofweek': '3', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Tarde Jueves', 'dayofweek': '3', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Mañana Viernes', 'dayofweek': '4', 'hour_from': 0, 'hour_to': 1, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Mañana Viernes', 'dayofweek': '4', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Tarde Viernes', 'dayofweek': '4', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Mañana Sabado', 'dayofweek': '5', 'hour_from': 0, 'hour_to': 1, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Mañana Sabado', 'dayofweek': '5', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
+                    (0, 0, {'name': 'Tarde Sabado', 'dayofweek': '5', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_nocturna})
+                ]"
+            />
+        </record>
+
+        <!-- Tipo de estructura (Tipos de Contratos) -->
+        <record id="hr_payroll_structure_type_obra_labor" model="hr.payroll.structure.type">
+            <field name="name">Obra o labor</field>
+            <field name="country_id">49</field>
+            <field name="wage_type">monthly</field>
+            <field name="default_resource_calendar_id"></field>
+            <field name="default_work_entry_type_id" ref="hr_work_entry_type_diurna"/>
+        </record>
+
+        <!-- Estructuras salariales (Contrato) -->
+        <record id="hr_payroll_structure_obra_labor" model="hr.payroll.structure">
+            <field name="name">Contrato por obra o labor</field>
+            <field name="type_id" ref="hr_payroll_structure_type_obra_labor"/>
+        </record>
+
+        <!-- Categorías de Reglas Salariales -->
+        <record id="hr_salary_rule_category_valor_horas" model="hr.salary.rule.category">
+            <field name="name">Salario Hora</field>
+            <field name="code">SH</field>
+        </record>
+
+        <record id="hr_salary_rule_category_horas_extra" model="hr.salary.rule.category">
+            <field name="name">Horas Extra</field>
+            <field name="code">HE</field>
+        </record>
+
+        <record id="hr_salary_rule_category_recargos" model="hr.salary.rule.category">
+            <field name="name">Recargos</field>
+            <field name="code">REC</field>
+        </record>
+
+        <record id="hr_salary_rule_category_devengado" model="hr.salary.rule.category">
+            <field name="name">Devengado</field>
+            <field name="code">DEV</field>
+        </record>
+
+        <record id="hr_salary_rule_category_auxilios" model="hr.salary.rule.category">
+            <field name="name">Auxilios</field>
+            <field name="code">AUX</field>
+        </record>
+
+        <record id="hr_salary_rule_category_primas" model="hr.salary.rule.category">
+            <field name="name">Primas</field>
+            <field name="code">PRI</field>
+        </record>
+
+        <!-- Parámetros de la regla salarial -->
+        <record id="hr_rule_parameter_SMMLV" model="hr.rule.parameter">
+            <field name="name">Salario Mínimo</field>
+            <field name="code">SMMLV</field>
+            <field name="description">Valor del salario mínimo legal vigente por mes.</field>
+        </record>
+
+        <record id="hr_rule_parameter_hora_extra_diurna" model="hr.rule.parameter">
+            <field name="name">% Hora Extra Diurna</field>
+            <field name="code">PHED</field>
+            <field name="description">Porcentaje establecido por ley para el calculo de horas extra diurnas.</field>
+        </record>
+
+        <record id="hr_rule_parameter_hora_extra_nocturna" model="hr.rule.parameter">
+            <field name="name">% Hora Extra Nocturna</field>
+            <field name="code">PHEN</field>
+            <field name="description">Porcentaje establecido por ley para el calculo de horas extra nocturnas.</field>
+        </record>
+
+        <record id="hr_rule_parameter_hora_extra_diurna_festivo" model="hr.rule.parameter">
+            <field name="name">% Hora Extra Diurna Festivo</field>
+            <field name="code">PHEDF</field>
+            <field name="description">Porcentaje establecido por ley para el calculo de horas extra diurnas festivas.</field>
+        </record>
+
+        <record id="hr_rule_parameter_hora_extra_nocturna_festivo" model="hr.rule.parameter">
+            <field name="name">% Hora Extra Nocturna Festivo</field>
+            <field name="code">PHENF</field>
+            <field name="description">Porcentaje establecido por ley para el calculo de horas extra nocturnas festivas.</field>
+        </record>
+
+        <record id="hr_rule_parameter_recargo_nocturno_ordinario" model="hr.rule.parameter">
+            <field name="name">% Recargo Nocturno Ordinario</field>
+            <field name="code">PRNO</field>
+            <field name="description">Porcentaje establecido por ley para el calculo de recargos nocturnos ordinarios.</field>
+        </record>
+
+        <record id="hr_rule_parameter_recargo_festivo_diurno" model="hr.rule.parameter">
+            <field name="name">% Recargo Festivo Diurno</field>
+            <field name="code">PRFD</field>
+            <field name="description">Porcentaje establecido por ley para el calculo de recargos diurnos festivos.</field>
+        </record>
+
+        <record id="hr_rule_parameter_recargo_festivo_nocturno" model="hr.rule.parameter">
+            <field name="name">% Recargo Festivo Nocturno</field>
+            <field name="code">PRFN</field>
+            <field name="description">Porcentaje establecido por ley para el calculo de recargos nocturnos festivos.</field>
+        </record>
+
+        <record id="hr_rule_parameter_semanas_mes" model="hr.rule.parameter">
+            <field name="name">Semanas por Mes</field>
+            <field name="code">SM</field>
+            <field name="description">Numero de semanas por mes para calcular el número de días por mes.</field>
+        </record>
+
+        <record id="hr_rule_parameter_auxilio_transporte" model="hr.rule.parameter">
+            <field name="name">Auxilio de Transporte</field>
+            <field name="code">AT</field>
+            <field name="description">Valor del auxilio establecido por ley.</field>
+        </record>
+
+        <record id="hr_rule_parameter_auxilio_conectividad" model="hr.rule.parameter">
+            <field name="name">Auxilio de Conectividad</field>
+            <field name="code">AC</field>
+            <field name="description">Valor del auxilio establecido por ley.</field>
+        </record>
+
+        <record id="hr_rule_parameter_prima_servicios" model="hr.rule.parameter">
+            <field name="name">% Prima de Servicios</field>
+            <field name="code">PS</field>
+            <field name="description">Es equivalente al 50% del salario de un mes devengado por el trabajador. Se paga semestralmente (30 de Junio y 28 de Diciembre).</field>
+        </record>
+
+        <record id="hr_rule_parameter_primera_prima_servicios" model="hr.rule.parameter">
+            <field name="name">Fecha Primera Prima de Servicios</field>
+            <field name="code">DPP</field>
+            <field name="description">La primera fecha de pago de la prima es el 30 de Junio. El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_segunda_prima_servicios" model="hr.rule.parameter">
+            <field name="name">Fecha Segunda Prima de Servicios</field>
+            <field name="code">DSP</field>
+            <field name="description">La segunda fecha de pago de la prima es el 28 de Diciembre. El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_hora_morning" model="hr.rule.parameter">
+            <field name="name">Hora Mañana</field>
+            <field name="code">HM</field>
+            <field name="description">La hora en la que empieza el trabajo diurno y termina el trabajo nocturno son las 6 am (06:00).</field>
+        </record>
+
+        <record id="hr_rule_parameter_hora_afternoon" model="hr.rule.parameter">
+            <field name="name">Hora Tarde</field>
+            <field name="code">HT</field>
+            <field name="description">La hora en la que empieza el trabajo nocturno y termina el trabajo diurno son las 9 pm (21:00).</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_new_year" model="hr.rule.parameter">
+            <field name="name">Año Nuevo</field>
+            <field name="code">FAN</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_reyes" model="hr.rule.parameter">
+            <field name="name">Día de los Reyes Magos</field>
+            <field name="code">FRM</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_san_jose" model="hr.rule.parameter">
+            <field name="name">Día de San José</field>
+            <field name="code">FSJ</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_jueves_santo" model="hr.rule.parameter">
+            <field name="name">Jueves Santo</field>
+            <field name="code">FJS</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_viernes_santo" model="hr.rule.parameter">
+            <field name="name">Viernes Santo</field>
+            <field name="code">FVS</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_work_day" model="hr.rule.parameter">
+            <field name="name">Día del Trabajo</field>
+            <field name="code">FDT</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_cristo" model="hr.rule.parameter">
+            <field name="name">Día de la Ascensión de Cristo</field>
+            <field name="code">FAC</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_corpus_christi" model="hr.rule.parameter">
+            <field name="name">Corpus Christi</field>
+            <field name="code">FCC</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_sagrado_corazon" model="hr.rule.parameter">
+            <field name="name">Día del Sagrado Corazón</field>
+            <field name="code">FSC</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_sanpedro_sanpablo" model="hr.rule.parameter">
+            <field name="name">San Pedro y San Pablo</field>
+            <field name="code">FPP</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_independencia_colombia" model="hr.rule.parameter">
+            <field name="name">Día de la Independencia de Colombia</field>
+            <field name="code">FDI</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_batalla_boyaca" model="hr.rule.parameter">
+            <field name="name">Batalla de Boyacá</field>
+            <field name="code">FBB</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_virgen_maria" model="hr.rule.parameter">
+            <field name="name">Día de la Asunción de la Virgen María</field>
+            <field name="code">FVM</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_raza" model="hr.rule.parameter">
+            <field name="name">Día de la Raza</field>
+            <field name="code">FDR</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_santos" model="hr.rule.parameter">
+            <field name="name">Día de Todos los Santos o de los Fieles Difuntos</field>
+            <field name="code">FFD</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_independencia_cartagena" model="hr.rule.parameter">
+            <field name="name">Independencia de Cartagena</field>
+            <field name="code">FIC</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_inmaculada_concepcion" model="hr.rule.parameter">
+            <field name="name">Día de la Inmaculada Concepción</field>
+            <field name="code">FDC</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <record id="hr_rule_parameter_festivo_navidad" model="hr.rule.parameter">
+            <field name="name">Navidad</field>
+            <field name="code">FDN</field>
+            <field name="description">El fromato debe ser "dia/mes", si es un solo dígito se debe agregar un cero a la izquierda.</field>
+        </record>
+
+        <!-- Valores de parámetros -->
+        <record id="hr_rule_parameter_value_SMMLV" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_SMMLV"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">908526</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_hora_extra_diurna" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_hora_extra_diurna"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">1.25</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_hora_extra_nocturna" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_hora_extra_nocturna"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">1.75</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_hora_extra_diurna_festivo" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_hora_extra_diurna_festivo"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">2.00</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_hora_extra_nocturna_festivo" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_hora_extra_nocturna_festivo"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">2.50</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_recargo_nocturno_ordinario" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_recargo_nocturno_ordinario"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">0.35</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_recargo_festivo_diurno" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_recargo_festivo_diurno"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">0.75</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_recargo_festivo_nocturno" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_recargo_festivo_nocturno"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">1.10</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_semanas_mes" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_semanas_mes"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">4</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_auxilio_transporte" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_auxilio_transporte"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">106454</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_auxilio_conectividad" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_auxilio_conectividad"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">106454</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_prima_servicios" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_prima_servicios"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">0.5</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_primera_prima_servicios" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_primera_prima_servicios"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">30/06</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_segunda_prima_servicios" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_segunda_prima_servicios"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">28/12</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_hora_morning" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_hora_morning"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">06:00</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_hora_afternoon" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_hora_afternoon"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">21:00</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_new_year" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_new_year"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">01/01</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_reyes" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_reyes"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">11/01</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_san_jose" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_san_jose"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">22/03</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_jueves_santo" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_jueves_santo"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">01/04</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_biernes_santo" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_viernes_santo"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">02/04</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_work_day" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_work_day"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">01/05</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_cristo" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_cristo"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">17/05</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_corpus_christi" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_corpus_christi"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">07/06</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_sagrado_corazon" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_sagrado_corazon"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">14/06</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_sanpedro_sanpablo" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_sanpedro_sanpablo"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">05/07</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_independencia_colombia" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_independencia_colombia"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">20/07</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_batalla_boyaca" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_batalla_boyaca"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">07/08</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_virgen_maria" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_virgen_maria"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">16/08</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_raza" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_raza"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">18/10</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_santos" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_santos"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">01/11</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_independencia_cartagena" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_independencia_cartagena"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">15/11</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_inmaculada_concepcion" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_inmaculada_concepcion"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">08/12</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_festivo_navidad" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_festivo_navidad"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">25/12</field>
+        </record>
+
+        <!-- Reglas Salariales -->
+        
+        <record id="hr_salary_rule_valor_hora" model="hr.salary.rule">
+            <field name="name">Salario por Hora</field>
+            <field name="category_id" ref="hr_salary_rule_category_valor_horas"/>
+            <field name="code">SH</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">0</field>
+            <field name="sequence">2</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.wage / (contract.resource_calendar_id.full_time_required_hours * payslip.rule_parameter('SM'))
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_horas_extra_diurnas" model="hr.salary.rule">
+            <field name="name">Horas Extra Diurnas</field>
+            <field name="category_id" ref="hr_salary_rule_category_horas_extra"/>
+            <field name="code">HED</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="sequence">3</field>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = worked_days.HE.numero_horas_extras_ordinarias_diurnas > 0
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.SH * payslip.rule_parameter('PHED') * worked_days.HE.numero_horas_extras_ordinarias_diurnas
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_horas_extra_nocturnas" model="hr.salary.rule">
+            <field name="name">Horas Extra Nocturnas</field>
+            <field name="category_id" ref="hr_salary_rule_category_horas_extra"/>
+            <field name="code">HEN</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="sequence">3</field>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = worked_days.HE.numero_horas_extras_ordinarias_nocturnas > 0
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.SH * payslip.rule_parameter('PHEN') * worked_days.HE.numero_horas_extras_ordinarias_nocturnas
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_horas_extra_diurnas_festivas" model="hr.salary.rule">
+            <field name="name">Horas Extra Diurnas Festivas</field>
+            <field name="category_id" ref="hr_salary_rule_category_horas_extra"/>
+            <field name="code">HEDF</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="sequence">3</field>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = worked_days.HE.numero_horas_extras_festivas_diurnas > 0
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.SH * payslip.rule_parameter('PHEDF') * worked_days.HE.numero_horas_extras_festivas_diurnas
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_horas_extra_nocturnas_festivas" model="hr.salary.rule">
+            <field name="name">Horas Extra Nocturnas Festivas</field>
+            <field name="category_id" ref="hr_salary_rule_category_horas_extra"/>
+            <field name="code">HENF</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="sequence">3</field>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = worked_days.HE.numero_horas_extras_festivas_nocturnas > 0
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.SH * payslip.rule_parameter('PHENF') * worked_days.HE.numero_horas_extras_festivas_nocturnas
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_recargos_nocturnos_ordinarios" model="hr.salary.rule">
+            <field name="name">Recargos Nocturnos Ordinarios</field>
+            <field name="category_id" ref="hr_salary_rule_category_recargos"/>
+            <field name="code">RNO</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="sequence">4</field>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = (worked_days.HE.numero_horas_nocturnas_ordinarias > 0) and (worked_days.INN.numero_horas_nocturnas_ordinarias > 0)
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.SH * payslip.rule_parameter('PRNO') * (worked_days.HE.numero_horas_nocturnas_ordinarias + worked_days.INN.numero_horas_nocturnas_ordinarias)
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_recargos_diurnos_festivos" model="hr.salary.rule">
+            <field name="name">Recargos Diurnos Festivos</field>
+            <field name="category_id" ref="hr_salary_rule_category_recargos"/>
+            <field name="code">RFD</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="sequence">4</field>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = (worked_days.HE.numero_horas_diurnas_festivas > 0) and (worked_days.IND.numero_horas_diurnas_festivas > 0)
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.SH * payslip.rule_parameter('PRFD') * (worked_days.HE.numero_horas_diurnas_festivas + worked_days.IND.numero_horas_diurnas_festivas)
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_recargos_nocturnos_festivos" model="hr.salary.rule">
+            <field name="name">Recargos Nocturnos Festivos</field>
+            <field name="category_id" ref="hr_salary_rule_category_recargos"/>
+            <field name="code">RFN</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="sequence">4</field>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = result = (worked_days.HE.numero_horas_nocturnas_festivas > 0) and (worked_days.INN.numero_horas_nocturnas_festivas > 0)
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.SH * payslip.rule_parameter('PRFN') * (worked_days.HE.numero_horas_nocturnas_festivas + worked_days.INN.numero_horas_nocturnas_festivas)
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_devengado_antes_auxilios" model="hr.salary.rule">
+            <field name="name">Devengado Antes de Auxilios</field>
+            <field name="category_id" ref="hr_salary_rule_category_devengado"/>
+            <field name="code">DAA</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="sequence">5</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.HE + categories.BASIC + categories.REC
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_auxilio_transporte" model="hr.salary.rule">
+            <field name="name">Auxilios</field>
+            <field name="category_id" ref="hr_salary_rule_category_auxilios"/>
+            <field name="code">AUX</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="sequence">6</field>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = (2 * payslip.rule_parameter('SM') >= categories.DAA + payslip.rule_parameter('AT')) and (contract.auxilio_transporte or contract.auxilio_conectividad)
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = (contract.auxilio_transporte * payslip.rule_parameter('AT')) + (contract.auxilio_conectividad * payslip.rule_parameter('AC'))
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_devengado" model="hr.salary.rule">
+            <field name="name">Devengado</field>
+            <field name="category_id" ref="hr_salary_rule_category_devengado"/>
+            <field name="code">DEV</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="sequence">7</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.DAA + categories.AUX
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_prima_servicios" model="hr.salary.rule">
+            <field name="name">Prima de Servicios</field>
+            <field name="category_id" ref="hr_salary_rule_category_primas"/>
+            <field name="code">PRI</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="sequence">8</field>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = payslip.prima
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.wage * payslip.rule_parameter('PS')
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,28 @@
+<odoo>
+
+    <record id="view_municipio_tree" model="ir.ui.view">
+        <field name="name">res.municipio.tree</field>
+        <field name="model">res.municipio</field>
+        <field name="arch" type="xml">
+            <tree string="Municipio" editable="bottom" create="1" delete="0">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="res_partner_municipio_inherit">
+        <field name="name">res.partner.municipio</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='city']" position="after">
+                <field name="municipio" class="o_municipio" placeholder="Municipio"/>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="DV"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo> 
