@@ -20,6 +20,8 @@ class HrPayslip(models.Model):
         else:
             self.prima = False
     
+    @api.onchange('worked_days_line_ids','date_from','date_to')
+    def get_hours(self):
         for line_worked_days in self.worked_days_line_ids:
             line_worked_days.numero_horas_diurnas_ordinarias = self.compute_horas(line_worked_days.work_entry_type_id, self.date_from, self.date_to, 'HDO')
             line_worked_days.numero_horas_nocturnas_ordinarias = self.compute_horas(line_worked_days.work_entry_type_id, self.date_from, self.date_to, 'HNO')
@@ -29,15 +31,36 @@ class HrPayslip(models.Model):
             line_worked_days.numero_horas_extras_ordinarias_nocturnas = self.compute_horas(line_worked_days.work_entry_type_id, self.date_from, self.date_to, 'HENO')
             line_worked_days.numero_horas_extras_festivas_diurnas = self.compute_horas(line_worked_days.work_entry_type_id, self.date_from, self.date_to, 'HEDF')
             line_worked_days.numero_horas_extras_festivas_nocturnas = self.compute_horas(line_worked_days.work_entry_type_id, self.date_from, self.date_to, 'HENF')
-    
+
     def compute_horas(self, tipo, inicio, fin, tipo_hora):
-        HDO
-        HNO
-        HDF
-        HNF
-        HEDO
-        HENO
-        HEDF
-        HENF
+
+        HDO_number = 0
+        HNO_number = 0
+        HDF_number = 0
+        HNF_number = 0
+        HEDO_number = 0
+        HENO_number = 0
+        HEDF_number = 0
+        HENF_number = 0
 
         for work_entry in self.env['hr.work.entry'].search([('work_entry_type_id','=',tipo.id),('date_start','>=',inicio),('date_stop','>=',fin)]):
+            if tipo_hora == 'HDO':
+                HDO_number += work_entry.horas_diurnas_ordinarias
+            if tipo_hora == 'HNO':
+                HNO_number += work_entry.horas_nocturnas_ordinarias
+            if tipo_hora == 'HDF':
+                HDF_number += work_entry.horas_diurnas_festivas
+            if tipo_hora == 'HNF':
+                HNF_number += work_entry.horas_nocturnas_festivas
+            if tipo_hora == 'HEDO':
+                HEDO_number += work_entry.horas_extras_ordinarias_diurnas
+            if tipo_hora == 'HENO':
+                HENO_number += work_entry.horas_extras_ordinarias_nocturnas
+            if tipo_hora == 'HEDF':
+                HEDF_number += work_entry.horas_extras_festivas_diurnas
+            if tipo_hora == 'HENF':
+                HENF_number += work_entry.horas_extras_festivas_nocturnas
+        
+        horas = HDO_number + HNO_number + HDF_number + HNF_number + HEDO_number + HENO_number + HEDF_number + HENF_number
+
+        return horas
