@@ -12,6 +12,77 @@
                             <field name="auxilio_conectividad"/>
                         </group>
                     </group>
+                    <group name="riesgo">
+                        <group name="riesgo_empleado" string="Riesgo">
+                            <field name="riesgo" required="True"/>
+                        </group>
+                    </group>
+                    <group name="primas" invisible="False">
+                        <group name="primas_empleado" string="Primas">
+                            <field name="prima_1"/>
+                            <field name="prima_2"/>
+                            <field name="prima_3"/>
+                            <field name="prima_4"/>
+                            <field name="prima_5"/>
+                            <field name="prima_6"/>
+                            <field name="prima_7"/>
+                            <field name="prima_8"/>
+                            <field name="prima_9"/>
+                            <field name="prima_10"/>
+                            <field name="prima_11"/>
+                            <field name="prima_12"/>
+                        </group>
+                    </group>
+                    <group name="cesantias" invisible="False">
+                        <group name="cesantias_empleado" string="Cesantias">
+                            <field name="cesantias_1"/>
+                            <field name="cesantias_2"/>
+                            <field name="cesantias_3"/>
+                            <field name="cesantias_4"/>
+                            <field name="cesantias_5"/>
+                            <field name="cesantias_6"/>
+                            <field name="cesantias_7"/>
+                            <field name="cesantias_8"/>
+                            <field name="cesantias_9"/>
+                            <field name="cesantias_10"/>
+                            <field name="cesantias_11"/>
+                            <field name="cesantias_12"/>
+
+                            <field name="intereses_cesantias_1"/>
+                            <field name="intereses_cesantias_2"/>
+                            <field name="intereses_cesantias_3"/>
+                            <field name="intereses_cesantias_4"/>
+                            <field name="intereses_cesantias_5"/>
+                            <field name="intereses_cesantias_6"/>
+                            <field name="intereses_cesantias_7"/>
+                            <field name="intereses_cesantias_8"/>
+                            <field name="intereses_cesantias_9"/>
+                            <field name="intereses_cesantias_10"/>
+                            <field name="intereses_cesantias_11"/>
+                            <field name="intereses_cesantias_12"/>
+
+                            <field name="total_cesantias_year"/>
+                            <field name="total_intereses_cesantias_year"/>
+                        </group>
+                    </group>
+                    <group name="vacaciones" invisible="False">
+                        <group name="vacaciones_empleado" string="Vacaciones">
+                            <field name="vacaciones_1"/>
+                            <field name="vacaciones_2"/>
+                            <field name="vacaciones_3"/>
+                            <field name="vacaciones_4"/>
+                            <field name="vacaciones_5"/>
+                            <field name="vacaciones_6"/>
+                            <field name="vacaciones_7"/>
+                            <field name="vacaciones_8"/>
+                            <field name="vacaciones_9"/>
+                            <field name="vacaciones_10"/>
+                            <field name="vacaciones_11"/>
+                            <field name="vacaciones_12"/>
+
+                            <field name="total_vacaciones"/>
+                        </group>
+                    </group>
                 </xpath>
             </field>
         </record>

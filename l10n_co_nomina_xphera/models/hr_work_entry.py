@@ -7,7 +7,14 @@ from odoo import api, fields, models
 class HrWorkEntry(models.Model):
     _inherit = 'hr.work.entry'
 
-    pagar_festivos = fields.Boolean(string='Pagar festivos', help='Esta opción permite saber si se deben tener en cuenta las horas de en días festivos.')
+    pay_festivos = fields.Boolean(string='Pagar festivos', default=False, help='Esta opción permite saber si se deben tener en cuenta las horas en días festivos.')
+
+    @api.onchange('work_entry_type_id')
+    def _pagar_festivos(self):
+        if self.work_entry_type_id.pagar_festivos:
+            self.pay_festivos = True
+        else:
+            self.pay_festivos = False
 
     @api.depends('date_start','date_stop','employee_id')
     def _calculo_horas(self):
@@ -20,15 +27,22 @@ class HrWorkEntry(models.Model):
             domingos.append(fecha)
             fecha += timedelta(days=7)
         
-        fecha_real_inicio = (self.date_start - timedelta(hours=5))
-        fecha_real_fin = (self.date_stop - timedelta(hours=5))
+        if self.date_start:
+            fecha_real_inicio = (self.date_start - timedelta(hours=5))
+        else:
+            fecha_real_inicio = datetime.today()
+
+        if self.date_stop:
+            fecha_real_fin = (self.date_stop - timedelta(hours=5))
+        else:
+            fecha_real_fin = datetime.today()
 
         morning = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','HM')],limit=1).parameter_value
         hour_morning = datetime.strptime(morning, '%H:%M').time().hour
         afternoon = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','HT')],limit=1).parameter_value
         hour_afternoon = datetime.strptime(afternoon, '%H:%M').time().hour
 
-        new_year = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FAN')],limit=1).parameter_value
+        '''new_year = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FAN')],limit=1).parameter_value
         reyes = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FRM')],limit=1).parameter_value
         san_jose = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FSJ')],limit=1).parameter_value
         jueves_santo = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FJS')],limit=1).parameter_value
@@ -85,7 +99,14 @@ class HrWorkEntry(models.Model):
             date_independencia_cartagena,
             date_inmaculada_concepcion,
             date_navidad
-        ]
+        ]'''
+
+        festivos = []
+        days_festivos = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.es_festivo','=',True)])
+
+        for day_fest in days_festivos:
+            dia = datetime.strptime(day_fest.parameter_value + '/' + str(year), '%d/%m/%Y').date()
+            festivos.append(dia)
 
         domingos_festivos = festivos + domingos
 

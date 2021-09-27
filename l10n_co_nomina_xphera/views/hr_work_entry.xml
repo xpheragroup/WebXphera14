@@ -19,7 +19,7 @@
                         <field name="horas_extras_festivas_nocturnas"/>
                     </group>
                     <group>
-                        <field name="pagar_festivos"/>
+                        <field name="pay_festivos"/>
                     </group>
                 </xpath>
             </field>
