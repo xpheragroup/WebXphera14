@@ -47,7 +47,7 @@
             <field name="color">4</field>
             <field name="code">VAC</field>
             <field name="pagar_festivos">0</field>
-            <field name="is_leave" eval="False"/>
+            <field name="is_leave" eval="True"/>
             <field name="round_days">NO</field>
         </record>
 
@@ -56,7 +56,7 @@
             <field name="color">10</field>
             <field name="code">LIR</field>
             <field name="pagar_festivos">0</field>
-            <field name="is_leave" eval="False"/>
+            <field name="is_leave" eval="True"/>
             <field name="round_days">NO</field>
         </record>
 
@@ -65,7 +65,7 @@
             <field name="color">9</field>
             <field name="code">LNR</field>
             <field name="pagar_festivos">0</field>
-            <field name="is_leave" eval="False"/>
+            <field name="is_leave" eval="True"/>
             <field name="round_days">NO</field>
         </record>
 
@@ -74,16 +74,34 @@
             <field name="color">11</field>
             <field name="code">PER</field>
             <field name="pagar_festivos">0</field>
-            <field name="is_leave" eval="False"/>
+            <field name="is_leave" eval="True"/>
             <field name="round_days">NO</field>
         </record>
 
-        <record id="hr_work_entry_incapacidades" model="hr.work.entry.type">
-            <field name="name">Incapacidades</field>
-            <field name="color">7</field>
-            <field name="code">INC</field>
+        <record id="hr_work_entry_permisos_no_remunerados" model="hr.work.entry.type">
+            <field name="name">Permisos No Remunerados</field>
+            <field name="color">11</field>
+            <field name="code">PNR</field>
             <field name="pagar_festivos">0</field>
-            <field name="is_leave" eval="False"/>
+            <field name="is_leave" eval="True"/>
+            <field name="round_days">NO</field>
+        </record>
+
+        <record id="hr_work_entry_incapacidad_general" model="hr.work.entry.type">
+            <field name="name">Incapacidad General</field>
+            <field name="color">7</field>
+            <field name="code">ING</field>
+            <field name="pagar_festivos">0</field>
+            <field name="is_leave" eval="True"/>
+            <field name="round_days">NO</field>
+        </record>
+
+        <record id="hr_work_entry_incapacidad_laboral" model="hr.work.entry.type">
+            <field name="name">Incapacidad Enfermedad Laboral</field>
+            <field name="color">7</field>
+            <field name="code">IEL</field>
+            <field name="pagar_festivos">0</field>
+            <field name="is_leave" eval="True"/>
             <field name="round_days">NO</field>
         </record>
 
@@ -1563,6 +1581,132 @@ elif IUVT > 2300:
             <field name="create_calendar_meeting">1</field>
             <field name="color_name">lightblue</field>
             <field name="work_entry_type_id" ref="hr_work_entry_permisos_remunerados"/>
+        </record>
+
+        <record id="hr_leave_type_cargo_oficial" model="hr.leave.type">
+            <field name="name">Consecuencia del Desempeño de Cargos Oficiales</field>
+            <field name="code">CDCO</field>
+            <field name="request_unit">day</field>
+            <field name="allocation_type">no</field>
+            <field name="leave_validation_type">both</field>
+            <field name="responsible_id">1</field>
+            <field name="leave_notif_subtype_id" ref="mail_message_subtype_permisos"/>
+            <field name="allocation_notif_subtype_id" ref="mail_message_subtype_permisos"/>
+            <field name="create_calendar_meeting">1</field>
+            <field name="color_name">lightblue</field>
+            <field name="work_entry_type_id" ref="hr_work_entry_permisos_remunerados"/>
+        </record>
+
+        <record id="hr_leave_type_voto" model="hr.leave.type">
+            <field name="name">Permiso por Ejercicio al Derecho al Voto</field>
+            <field name="code">PEDV</field>
+            <field name="request_unit">day</field>
+            <field name="allocation_type">no</field>
+            <field name="leave_validation_type">both</field>
+            <field name="responsible_id">1</field>
+            <field name="leave_notif_subtype_id" ref="mail_message_subtype_permisos"/>
+            <field name="allocation_notif_subtype_id" ref="mail_message_subtype_permisos"/>
+            <field name="create_calendar_meeting">1</field>
+            <field name="color_name">lightblue</field>
+            <field name="work_entry_type_id" ref="hr_work_entry_permisos_remunerados"/>
+        </record>
+
+        <record id="hr_leave_type_calamidad" model="hr.leave.type">
+            <field name="name">Grave Calamidad Domestica</field>
+            <field name="code">GCD</field>
+            <field name="request_unit">day</field>
+            <field name="allocation_type">no</field>
+            <field name="leave_validation_type">both</field>
+            <field name="responsible_id">1</field>
+            <field name="leave_notif_subtype_id" ref="mail_message_subtype_permisos"/>
+            <field name="allocation_notif_subtype_id" ref="mail_message_subtype_permisos"/>
+            <field name="create_calendar_meeting">1</field>
+            <field name="color_name">lightblue</field>
+            <field name="work_entry_type_id" ref="hr_work_entry_permisos_remunerados"/>
+        </record>
+
+        <record id="hr_leave_type_incapacidad_general" model="hr.leave.type">
+            <field name="name">Incapacidad Enfermedad General</field>
+            <field name="code">ING</field>
+            <field name="request_unit">day</field>
+            <field name="allocation_type">no</field>
+            <field name="leave_validation_type">both</field>
+            <field name="responsible_id">1</field>
+            <field name="leave_notif_subtype_id" ref="mail_message_subtype_incapacidades"/>
+            <field name="allocation_notif_subtype_id" ref="mail_message_subtype_incapacidades"/>
+            <field name="create_calendar_meeting">1</field>
+            <field name="color_name">lightblue</field>
+            <field name="work_entry_type_id" ref="hr_work_entry_incapacidad_general"/>
+        </record>
+
+        <record id="hr_leave_type_incapacidad_laboral" model="hr.leave.type">
+            <field name="name">Incapacidad Enfermedad Laboral</field>
+            <field name="code">IEL</field>
+            <field name="request_unit">day</field>
+            <field name="allocation_type">no</field>
+            <field name="leave_validation_type">both</field>
+            <field name="responsible_id">1</field>
+            <field name="leave_notif_subtype_id" ref="mail_message_subtype_incapacidades"/>
+            <field name="allocation_notif_subtype_id" ref="mail_message_subtype_incapacidades"/>
+            <field name="create_calendar_meeting">1</field>
+            <field name="color_name">lightblue</field>
+            <field name="work_entry_type_id" ref="hr_work_entry_incapacidad_laboral"/>
+        </record>
+
+        <record id="hr_leave_type_calamidad_domestica" model="hr.leave.type">
+            <field name="name">Calamidad Domestica</field>
+            <field name="code">CAD</field>
+            <field name="request_unit">day</field>
+            <field name="allocation_type">no</field>
+            <field name="leave_validation_type">both</field>
+            <field name="responsible_id">1</field>
+            <field name="leave_notif_subtype_id" ref="mail_message_subtype_licencias"/>
+            <field name="allocation_notif_subtype_id" ref="mail_message_subtype_licencias"/>
+            <field name="create_calendar_meeting">1</field>
+            <field name="color_name">lightblue</field>
+            <field name="work_entry_type_id" ref="hr_work_entry_licencias_no_remuneradas"/>
+        </record>
+
+        <record id="hr_leave_type_citas_medicas_odontologicas" model="hr.leave.type">
+            <field name="name">Citas Médicas u Odontológicas</field>
+            <field name="code">CMO</field>
+            <field name="request_unit">day</field>
+            <field name="allocation_type">no</field>
+            <field name="leave_validation_type">both</field>
+            <field name="responsible_id">1</field>
+            <field name="leave_notif_subtype_id" ref="mail_message_subtype_licencias"/>
+            <field name="allocation_notif_subtype_id" ref="mail_message_subtype_licencias"/>
+            <field name="create_calendar_meeting">1</field>
+            <field name="color_name">lightblue</field>
+            <field name="work_entry_type_id" ref="hr_work_entry_licencias_no_remuneradas"/>
+        </record>
+
+        <record id="hr_leave_type_fuerza_mayor" model="hr.leave.type">
+            <field name="name">Eventos de Fuerza Mayor o Casos Fortuitos</field>
+            <field name="code">EFMCF</field>
+            <field name="request_unit">day</field>
+            <field name="allocation_type">no</field>
+            <field name="leave_validation_type">both</field>
+            <field name="responsible_id">1</field>
+            <field name="leave_notif_subtype_id" ref="mail_message_subtype_licencias"/>
+            <field name="allocation_notif_subtype_id" ref="mail_message_subtype_licencias"/>
+            <field name="create_calendar_meeting">1</field>
+            <field name="color_name">lightblue</field>
+            <field name="work_entry_type_id" ref="hr_work_entry_licencias_no_remuneradas"/>
+        </record>
+
+        <record id="hr_leave_type_personal" model="hr.leave.type">
+            <field name="name">Diligencias Personales</field>
+            <field name="code">DIP</field>
+            <field name="request_unit">day</field>
+            <field name="allocation_type">no</field>
+            <field name="leave_validation_type">both</field>
+            <field name="responsible_id">1</field>
+            <field name="leave_notif_subtype_id" ref="mail_message_subtype_licencias"/>
+            <field name="allocation_notif_subtype_id" ref="mail_message_subtype_licencias"/>
+            <field name="create_calendar_meeting">1</field>
+            <field name="color_name">lightblue</field>
+            <field name="work_entry_type_id" ref="hr_work_entry_licencias_no_remuneradas"/>
         </record>
 
     </data>
