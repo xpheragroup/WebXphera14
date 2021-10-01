@@ -2,7 +2,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import date, datetime, timedelta
-from odoo import api, fields, models
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 
 class HrWorkEntry(models.Model):
     _inherit = 'hr.work.entry'
@@ -41,65 +42,6 @@ class HrWorkEntry(models.Model):
         hour_morning = datetime.strptime(morning, '%H:%M').time().hour
         afternoon = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','HT')],limit=1).parameter_value
         hour_afternoon = datetime.strptime(afternoon, '%H:%M').time().hour
-
-        '''new_year = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FAN')],limit=1).parameter_value
-        reyes = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FRM')],limit=1).parameter_value
-        san_jose = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FSJ')],limit=1).parameter_value
-        jueves_santo = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FJS')],limit=1).parameter_value
-        viernes_santo = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FVS')],limit=1).parameter_value
-        work_day = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FDT')],limit=1).parameter_value
-        ascension_cristo = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FAC')],limit=1).parameter_value
-        corpus_christi = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FCC')],limit=1).parameter_value
-        sagrado_corazon = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FSC')],limit=1).parameter_value
-        sanpedro_sanpablo = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FPP')],limit=1).parameter_value
-        independencia_colombia = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FDI')],limit=1).parameter_value
-        batalla_boyaca = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FBB')],limit=1).parameter_value
-        virgen_maria = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FVM')],limit=1).parameter_value
-        raza = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FDR')],limit=1).parameter_value
-        santos = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FFD')],limit=1).parameter_value
-        independencia_cartagena = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FIC')],limit=1).parameter_value
-        inmaculada_concepcion = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FDC')],limit=1).parameter_value
-        navidad = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FDN')],limit=1).parameter_value
-
-        date_new_year = datetime.strptime(new_year + '/' + str(year), '%d/%m/%Y').date()
-        date_reyes = datetime.strptime(reyes + '/' + str(year), '%d/%m/%Y').date()
-        date_san_jose = datetime.strptime(san_jose + '/' + str(year), '%d/%m/%Y').date()
-        date_jueves_santo = datetime.strptime(jueves_santo + '/' + str(year), '%d/%m/%Y').date()
-        date_viernes_santo = datetime.strptime(viernes_santo + '/' + str(year), '%d/%m/%Y').date()
-        date_work_day = datetime.strptime(work_day + '/' + str(year), '%d/%m/%Y').date()
-        date_ascension_cristo = datetime.strptime(ascension_cristo + '/' + str(year), '%d/%m/%Y').date()
-        date_corpus_christi = datetime.strptime(corpus_christi + '/' + str(year), '%d/%m/%Y').date()
-        date_sagrado_corazon = datetime.strptime(sagrado_corazon + '/' + str(year), '%d/%m/%Y').date()
-        date_sanpedro_sanpablo = datetime.strptime(sanpedro_sanpablo + '/' + str(year), '%d/%m/%Y').date()
-        date_independencia_colombia = datetime.strptime(independencia_colombia + '/' + str(year), '%d/%m/%Y').date()
-        date_batalla_boyaca = datetime.strptime(batalla_boyaca + '/' + str(year), '%d/%m/%Y').date()
-        date_virgen_maria = datetime.strptime(virgen_maria + '/' + str(year), '%d/%m/%Y').date()
-        date_raza = datetime.strptime(raza + '/' + str(year), '%d/%m/%Y').date()
-        date_santos = datetime.strptime(santos + '/' + str(year), '%d/%m/%Y').date()
-        date_independencia_cartagena = datetime.strptime(independencia_cartagena + '/' + str(year), '%d/%m/%Y').date()
-        date_inmaculada_concepcion = datetime.strptime(inmaculada_concepcion + '/' + str(year), '%d/%m/%Y').date()
-        date_navidad = datetime.strptime(navidad + '/' + str(year), '%d/%m/%Y').date()
-
-        festivos = [
-            date_new_year,
-            date_reyes,
-            date_san_jose,
-            date_jueves_santo,
-            date_viernes_santo,
-            date_work_day,
-            date_ascension_cristo,
-            date_corpus_christi,
-            date_sagrado_corazon,
-            date_sanpedro_sanpablo,
-            date_independencia_colombia,
-            date_batalla_boyaca,
-            date_virgen_maria,
-            date_raza,
-            date_santos,
-            date_independencia_cartagena,
-            date_inmaculada_concepcion,
-            date_navidad
-        ]'''
 
         festivos = []
         days_festivos = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.es_festivo','=',True)])
@@ -186,7 +128,7 @@ class HrWorkEntry(models.Model):
                             self.horas_diurnas_ordinarias += (fecha_real_fin - fecha_conteo).seconds / 3600  # Number of hours
                             dupla = self.dupla_horas(fecha_conteo, fecha_real_fin)
                             day = fecha_conteo.strftime('%A')
-                            self.horas_extras_festivas_diurnas += self.compute_horas_extra(dupla, day)
+                            self.horas_extras_ordinarias_diurnas += self.compute_horas_extra(dupla, day)
                             fecha_conteo = fecha_real_fin
 
                 if hr_final < fecha_real_fin:
@@ -326,8 +268,9 @@ class HrWorkEntry(models.Model):
         
     horas_diurnas_ordinarias = fields.Float(string='Horas Diurnas Ordinales', compute=_calculo_horas)
     horas_nocturnas_ordinarias = fields.Float(string='Horas Nocuturna Ordinales', compute=_calculo_horas)
-    horas_nocturnas_festivas = fields.Float(string='Horas Nocuturna Festivas', compute=_calculo_horas)
     horas_diurnas_festivas = fields.Float(string='Horas Diurnas Festivas', compute=_calculo_horas)
+    horas_nocturnas_festivas = fields.Float(string='Horas Nocuturna Festivas', compute=_calculo_horas)
+    
     horas_extras_ordinarias_diurnas = fields.Float(string='Horas Extra Ordinarias Diurnas', compute=_calculo_horas)
     horas_extras_ordinarias_nocturnas = fields.Float(string='Horas Extra Ordinarias Nocturnas', compute=_calculo_horas)
     horas_extras_festivas_diurnas = fields.Float(string='Horas Extra Diurnas Festivas', compute=_calculo_horas)
@@ -420,3 +363,86 @@ class HrWorkEntry(models.Model):
             horas = horas_dupla - horas_intersecto
 
         return horas
+    
+    @api.model_create_multi
+    def create(self, vals_list):
+        work_entries = super(HrWorkEntry, self).create(vals_list)
+        
+        max_horas_extra_day = float(self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','MHED')],limit=1).parameter_value)
+        max_horas_extra_semana = float(self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','MHES')],limit=1).parameter_value)
+
+        if len(work_entries) == 1:
+            if work_entries.date_start:
+                fecha_real_inicio = (work_entries.date_start - timedelta(hours=5))
+            else:
+                fecha_real_inicio = datetime.today()
+            
+            entradas = self.env['hr.work.entry'].search([('employee_id','=',work_entries.employee_id.id)])
+
+            fecha = fecha_real_inicio.date().toordinal()
+            ultimo_domingo = fecha - (fecha % 7)
+            proximo_domingo = ultimo_domingo + 7
+
+            horas_extra_entradas_today = 0
+            horas_extra_entradas_semana = 0
+
+            for horas_entradas in entradas:
+                day_start = (horas_entradas.date_start - timedelta(hours=5)).date()
+                entradas_id = self.env['hr.work.entry'].search([('id','=',horas_entradas.id)])
+
+                if day_start == fecha_real_inicio.date():
+                    horas_extra_entradas_today += entradas_id.horas_extras_ordinarias_diurnas + entradas_id.horas_extras_ordinarias_nocturnas + entradas_id.horas_extras_festivas_diurnas + entradas_id.horas_extras_festivas_nocturnas 
+
+                if date.fromordinal(ultimo_domingo) < day_start <= date.fromordinal(proximo_domingo):
+                    horas_extra_entradas_semana += entradas_id.horas_extras_ordinarias_diurnas + entradas_id.horas_extras_ordinarias_nocturnas + entradas_id.horas_extras_festivas_diurnas + entradas_id.horas_extras_festivas_nocturnas
+            
+            if horas_extra_entradas_today > max_horas_extra_day:
+                raise UserError(_("La cantidad de horas extra por día es mayor a las " + str(max_horas_extra_day) + " horas permitidas."))
+            
+            if horas_extra_entradas_semana > max_horas_extra_semana:
+                raise UserError(_("La cantidad de horas extra en la semana actual es mayor a las " + str(max_horas_extra_semana) + " horas permitidas."))
+        
+        return work_entries
+    
+
+    def write(self, vals):
+        work_entries = super(HrWorkEntry, self).write(vals)
+        
+        max_horas_extra_day = float(self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','MHED')],limit=1).parameter_value)
+        max_horas_extra_semana = float(self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','MHES')],limit=1).parameter_value)
+
+        if ('date_start' in vals) or ('date_stop' in vals):
+            if 'date_start' in vals:
+                fecha_real_inicio = (datetime.strptime(vals['date_start'], '%Y-%m-%d %H:%M:%S') - timedelta(hours=5))
+            else:
+                fecha_real_inicio = (self.date_start - timedelta(hours=5))
+            
+            if 'employee_id' in vals:
+                entradas = self.env['hr.work.entry'].search([('employee_id','=',vals['employee_id'])])
+            else:
+                entradas = self.env['hr.work.entry'].search([('employee_id','=',self.employee_id.id)])
+
+            fecha = fecha_real_inicio.date().toordinal()
+            ultimo_domingo = fecha - (fecha % 7)
+            proximo_domingo = ultimo_domingo + 7
+
+            horas_extra_entradas_today = 0
+            horas_extra_entradas_semana = 0
+
+            for horas_entradas in entradas:
+                day_start = (horas_entradas.date_start - timedelta(hours=5)).date()
+                entradas_id = self.env['hr.work.entry'].search([('id','=',horas_entradas.id)])
+
+                if day_start == fecha_real_inicio.date():
+                    horas_extra_entradas_today += entradas_id.horas_extras_ordinarias_diurnas + entradas_id.horas_extras_ordinarias_nocturnas + entradas_id.horas_extras_festivas_diurnas + entradas_id.horas_extras_festivas_nocturnas 
+
+                if date.fromordinal(ultimo_domingo) < day_start <= date.fromordinal(proximo_domingo):
+                    horas_extra_entradas_semana += entradas_id.horas_extras_ordinarias_diurnas + entradas_id.horas_extras_ordinarias_nocturnas + entradas_id.horas_extras_festivas_diurnas + entradas_id.horas_extras_festivas_nocturnas
+            
+            if horas_extra_entradas_today > max_horas_extra_day:
+                raise UserError(_("La cantidad de horas extra por día es mayor a las " + str(max_horas_extra_day) + " horas permitidas."))
+            
+            if horas_extra_entradas_semana > max_horas_extra_semana:
+                raise UserError(_("La cantidad de horas extra en la semana actual es mayor a las " + str(max_horas_extra_semana) + " horas permitidas."))
+        
+        return work_entries

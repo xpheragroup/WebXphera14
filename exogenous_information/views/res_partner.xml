@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_names" model="ir.ui.view">
+        <field name="name">res.partner.names</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[1]" position="before">
+                <group col="4">
+                    <field name="primer_nombre" attrs="{'invisible': [('company_type','=', 'company')]}"/>
+                    <field name="segundo_nombre" attrs="{'invisible': [('company_type','=', 'company')]}"/>
+                    <field name="primer_apellido" attrs="{'invisible': [('company_type','=', 'company')]}"/>
+                    <field name="segundo_apellido" attrs="{'invisible': [('company_type','=', 'company')]}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

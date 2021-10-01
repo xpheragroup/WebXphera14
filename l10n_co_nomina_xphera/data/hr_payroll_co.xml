@@ -3,11 +3,14 @@
     <data noupdate="0">
 
         <!-- Entradas de Trabajo -->
+        <!-- Entradas de Trabajo -->
+        <!-- Entradas de Trabajo -->
+
         <record id="hr_work_entry_type_diurna" model="hr.work.entry.type">
             <field name="name">Diurna</field>
-            <field name="color">4</field>
+            <field name="color">8</field>
             <field name="code">IND</field>
-            <field name="pagar_festivos">1</field>
+            <field name="pagar_festivos">0</field>
             <field name="is_leave" eval="False"/>
             <field name="round_days">NO</field>
         </record>
@@ -16,6 +19,15 @@
             <field name="name">Nocturna</field>
             <field name="color">8</field>
             <field name="code">INN</field>
+            <field name="pagar_festivos">0</field>
+            <field name="is_leave" eval="False"/>
+            <field name="round_days">NO</field>
+        </record>
+
+        <record id="hr_work_entry_type_general" model="hr.work.entry.type">
+            <field name="name">General</field>
+            <field name="color">8</field>
+            <field name="code">GEN</field>
             <field name="pagar_festivos">0</field>
             <field name="is_leave" eval="False"/>
             <field name="round_days">NO</field>
@@ -30,7 +42,55 @@
             <field name="round_days">NO</field>
         </record>
 
+        <record id="hr_work_entry_vacaciones" model="hr.work.entry.type">
+            <field name="name">Vacaciones</field>
+            <field name="color">4</field>
+            <field name="code">VAC</field>
+            <field name="pagar_festivos">0</field>
+            <field name="is_leave" eval="False"/>
+            <field name="round_days">NO</field>
+        </record>
+
+        <record id="hr_work_entry_licencias_remuneradas" model="hr.work.entry.type">
+            <field name="name">Licencias Remuneradas</field>
+            <field name="color">10</field>
+            <field name="code">LIR</field>
+            <field name="pagar_festivos">0</field>
+            <field name="is_leave" eval="False"/>
+            <field name="round_days">NO</field>
+        </record>
+
+        <record id="hr_work_entry_licencias_no_remuneradas" model="hr.work.entry.type">
+            <field name="name">Licencias No Remuneradas</field>
+            <field name="color">9</field>
+            <field name="code">LNR</field>
+            <field name="pagar_festivos">0</field>
+            <field name="is_leave" eval="False"/>
+            <field name="round_days">NO</field>
+        </record>
+
+        <record id="hr_work_entry_permisos_remunerados" model="hr.work.entry.type">
+            <field name="name">Permisos Remunerados</field>
+            <field name="color">11</field>
+            <field name="code">PER</field>
+            <field name="pagar_festivos">0</field>
+            <field name="is_leave" eval="False"/>
+            <field name="round_days">NO</field>
+        </record>
+
+        <record id="hr_work_entry_incapacidades" model="hr.work.entry.type">
+            <field name="name">Incapacidades</field>
+            <field name="color">7</field>
+            <field name="code">INC</field>
+            <field name="pagar_festivos">0</field>
+            <field name="is_leave" eval="False"/>
+            <field name="round_days">NO</field>
+        </record>
+
         <!-- Tiempos de Trabajo -->
+        <!-- Tiempos de Trabajo -->
+        <!-- Tiempos de Trabajo -->
+
         <record id="resource_calendar_std_48h_diurna" model="resource.calendar">
             <field name="name">Standar 48 horas/semana Diurno</field>
             <field name="company_id" ref="base.main_company"/>
@@ -39,18 +99,18 @@
             <field name="full_time_required_hours">48.0</field>
             <field name="attendance_ids"
                 eval="[(6, 0, 0),
-                    (0, 0, {'name': 'Mañana Lunes', 'dayofweek': '0', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_diurna}),
-                    (0, 0, {'name': 'Tarde Lunes', 'dayofweek': '0', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_diurna}),
-                    (0, 0, {'name': 'Mañana Martes', 'dayofweek': '1', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_diurna}),
-                    (0, 0, {'name': 'Tarde Martes', 'dayofweek': '1', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_diurna}),
-                    (0, 0, {'name': 'Mañana Miercoles', 'dayofweek': '2', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_diurna}),
-                    (0, 0, {'name': 'Tarde Miercoles', 'dayofweek': '2', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_diurna}),
-                    (0, 0, {'name': 'Mañana Jueves', 'dayofweek': '3', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_diurna}),
-                    (0, 0, {'name': 'Tarde Jueves', 'dayofweek': '3', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_diurna}),
-                    (0, 0, {'name': 'Mañana Viernes', 'dayofweek': '4', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_diurna}),
-                    (0, 0, {'name': 'Tarde Viernes', 'dayofweek': '4', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_diurna}),
-                    (0, 0, {'name': 'Mañana Sabado', 'dayofweek': '5', 'hour_from': 8, 'hour_to': 12, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_diurna}),
-                    (0, 0, {'name': 'Tarde Sabado', 'dayofweek': '5', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_diurna})
+                    (0, 0, {'name': 'Mañana Lunes', 'dayofweek': '0', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Tarde Lunes', 'dayofweek': '0', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Mañana Martes', 'dayofweek': '1', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Tarde Martes', 'dayofweek': '1', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Mañana Miercoles', 'dayofweek': '2', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Tarde Miercoles', 'dayofweek': '2', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Mañana Jueves', 'dayofweek': '3', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Tarde Jueves', 'dayofweek': '3', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Mañana Viernes', 'dayofweek': '4', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Tarde Viernes', 'dayofweek': '4', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Mañana Sabado', 'dayofweek': '5', 'hour_from': 8, 'hour_to': 12, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Tarde Sabado', 'dayofweek': '5', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_general})
                 ]"
             />
         </record>
@@ -63,44 +123,78 @@
             <field name="full_time_required_hours">48.0</field>
             <field name="attendance_ids"
                 eval="[(6, 0, 0),
-                    (0, 0, {'name': 'Mañana Lunes', 'dayofweek': '0', 'hour_from': 0, 'hour_to': 1, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Mañana Lunes', 'dayofweek': '0', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Tarde Lunes', 'dayofweek': '0', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Mañana Martes', 'dayofweek': '1', 'hour_from': 0, 'hour_to': 1, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Mañana Martes', 'dayofweek': '1', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Tarde Martes', 'dayofweek': '1', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Mañana Miercoles', 'dayofweek': '2', 'hour_from': 0, 'hour_to': 1, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Mañana Miercoles', 'dayofweek': '2', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Tarde Miercoles', 'dayofweek': '2', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Mañana Jueves', 'dayofweek': '3', 'hour_from': 0, 'hour_to': 1, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Mañana Jueves', 'dayofweek': '3', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Tarde Jueves', 'dayofweek': '3', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Mañana Viernes', 'dayofweek': '4', 'hour_from': 0, 'hour_to': 1, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Mañana Viernes', 'dayofweek': '4', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Tarde Viernes', 'dayofweek': '4', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Mañana Sabado', 'dayofweek': '5', 'hour_from': 0, 'hour_to': 1, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Mañana Sabado', 'dayofweek': '5', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_nocturna}),
-                    (0, 0, {'name': 'Tarde Sabado', 'dayofweek': '5', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_nocturna})
+                    (0, 0, {'name': 'Mañana Lunes', 'dayofweek': '0', 'hour_from': 0, 'hour_to': 1, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Mañana Lunes', 'dayofweek': '0', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Tarde Lunes', 'dayofweek': '0', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Mañana Martes', 'dayofweek': '1', 'hour_from': 0, 'hour_to': 1, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Mañana Martes', 'dayofweek': '1', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Tarde Martes', 'dayofweek': '1', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Mañana Miercoles', 'dayofweek': '2', 'hour_from': 0, 'hour_to': 1, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Mañana Miercoles', 'dayofweek': '2', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Tarde Miercoles', 'dayofweek': '2', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Mañana Jueves', 'dayofweek': '3', 'hour_from': 0, 'hour_to': 1, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Mañana Jueves', 'dayofweek': '3', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Tarde Jueves', 'dayofweek': '3', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Mañana Viernes', 'dayofweek': '4', 'hour_from': 0, 'hour_to': 1, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Mañana Viernes', 'dayofweek': '4', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Tarde Viernes', 'dayofweek': '4', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Mañana Sabado', 'dayofweek': '5', 'hour_from': 0, 'hour_to': 1, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Mañana Sabado', 'dayofweek': '5', 'hour_from': 2, 'hour_to': 6, 'day_period': 'morning', 'work_entry_type_id': hr_work_entry_type_general}),
+                    (0, 0, {'name': 'Tarde Sabado', 'dayofweek': '5', 'hour_from': 21, 'hour_to': 24, 'day_period': 'afternoon', 'work_entry_type_id': hr_work_entry_type_general})
                 ]"
             />
         </record>
 
         <!-- Tipo de estructura (Tipos de Contratos) -->
-        <record id="hr_payroll_structure_type_obra_labor" model="hr.payroll.structure.type">
-            <field name="name">Obra o labor</field>
+        <!-- Tipo de estructura (Tipos de Contratos) -->
+        <!-- Tipo de estructura (Tipos de Contratos) -->
+
+        <record id="hr_payroll_structure_type_general" model="hr.payroll.structure.type">
+            <field name="name">General</field>
             <field name="country_id">49</field>
             <field name="wage_type">monthly</field>
             <field name="default_resource_calendar_id"></field>
-            <field name="default_work_entry_type_id" ref="hr_work_entry_type_diurna"/>
+            <field name="default_work_entry_type_id" ref="hr_work_entry_type_general"/>
         </record>
 
         <!-- Estructuras salariales (Contrato) -->
+        <!-- Estructuras salariales (Contrato) -->
+        <!-- Estructuras salariales (Contrato) -->
+
         <record id="hr_payroll_structure_obra_labor" model="hr.payroll.structure">
-            <field name="name">Contrato por obra o labor</field>
-            <field name="type_id" ref="hr_payroll_structure_type_obra_labor"/>
+            <field name="name">Contrato por Obra o Labor</field>
+            <field name="type_id" ref="hr_payroll_structure_type_general"/>
+        </record>
+
+        <record id="hr_payroll_structure_termino_fijo" model="hr.payroll.structure">
+            <field name="name">Contrato a Termino Fijo</field>
+            <field name="type_id" ref="hr_payroll_structure_type_general"/>
+        </record>
+
+        <record id="hr_payroll_structure_termino_indefinido" model="hr.payroll.structure">
+            <field name="name">Contrato a Termino Indefinido</field>
+            <field name="type_id" ref="hr_payroll_structure_type_general"/>
+        </record>
+
+        <record id="hr_payroll_structure_aprendizaje" model="hr.payroll.structure">
+            <field name="name">Contrato de Aprendizaje</field>
+            <field name="type_id" ref="hr_payroll_structure_type_general"/>
+        </record>
+
+        <record id="hr_payroll_structure_temporal_ocasional_accidental" model="hr.payroll.structure">
+            <field name="name">Contrato Temporal, Ocasional o Accidental</field>
+            <field name="type_id" ref="hr_payroll_structure_type_general"/>
+        </record>
+
+        <record id="hr_payroll_structure_prestacion_servicios" model="hr.payroll.structure">
+            <field name="name">Contrato por Prestación de Servicios</field>
+            <field name="type_id" ref="hr_payroll_structure_type_general"/>
         </record>
 
         <!-- Categorías de Reglas Salariales -->
+        <!-- Categorías de Reglas Salariales -->
+        <!-- Categorías de Reglas Salariales -->
+
         <record id="hr_salary_rule_category_valor_horas" model="hr.salary.rule.category">
             <field name="name">Salario Hora</field>
             <field name="code">SH</field>
@@ -157,6 +251,9 @@
         </record>
 
         <!-- Parámetros de la regla salarial -->
+        <!-- Parámetros de la regla salarial -->
+        <!-- Parámetros de la regla salarial -->
+
         <record id="hr_rule_parameter_SMMLV" model="hr.rule.parameter">
             <field name="name">Salario Mínimo</field>
             <field name="code">SMMLV</field>
@@ -493,9 +590,9 @@ Fecha máxima de pago: 31 de enero del siguiente año causado.
             </field>
         </record>
 
-        <record id="hr_rule_parameter_vacaciones" model="hr.rule.parameter">
-            <field name="name">Vacaciones</field>
-            <field name="code">VAC</field>
+        <record id="hr_rule_parameter_porcentaje_vacaciones" model="hr.rule.parameter">
+            <field name="name">Porcentaje Vacaciones</field>
+            <field name="code">PVAC</field>
             <field name="description">Porcentaje mensual del total devengado.
 Se liquidan cuando:
 1. El trabajador cumple un año laborando en la empresa.
@@ -506,13 +603,35 @@ Aplica tambien como una situación administrativa por ausencia del trabajador.
             </field>
         </record>
 
+        <record id="hr_rule_parameter_dias_vacaciones" model="hr.rule.parameter">
+            <field name="name">Dias Vacaciones</field>
+            <field name="code">DVAC</field>
+            <field name="description">Son 15 días hábiles continuos por año.
+            </field>
+        </record>
+
         <record id="hr_rule_parameter_UVT" model="hr.rule.parameter">
             <field name="name">UVT</field>
             <field name="code">UVT</field>
             <field name="description">Valor de la Unidad de Valor Tributario - UVT</field>
         </record>
 
+        <record id="hr_rule_parameter_max_horas_extra_day" model="hr.rule.parameter">
+            <field name="name">Maximo de Horas Extra por Día</field>
+            <field name="code">MHED</field>
+            <field name="description">Es el valor máximo de horas extra por día que puede hacer un empleado.</field>
+        </record>
+
+        <record id="hr_rule_parameter_max_horas_extra_semana" model="hr.rule.parameter">
+            <field name="name">Maximo de Horas Extra por Semana</field>
+            <field name="code">MHES</field>
+            <field name="description">Es el valor máximo de horas extra por semana que puede hacer un empleado.</field>
+        </record>
+
         <!-- Valores de parámetros -->
+        <!-- Valores de parámetros -->
+        <!-- Valores de parámetros -->
+
         <record id="hr_rule_parameter_value_SMMLV" model="hr.rule.parameter.value">
             <field name="rule_parameter_id" ref="hr_rule_parameter_SMMLV"/>
             <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
@@ -819,10 +938,16 @@ Aplica tambien como una situación administrativa por ausencia del trabajador.
             <field name="parameter_value">0.01</field>
         </record>
 
-        <record id="hr_rule_parameter_value_vacaciones" model="hr.rule.parameter.value">
-            <field name="rule_parameter_id" ref="hr_rule_parameter_vacaciones"/>
+        <record id="hr_rule_parameter_value_porcentaje_vacaciones" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_porcentaje_vacaciones"/>
             <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
             <field name="parameter_value">0.0417</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_dias_vacaciones" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_dias_vacaciones"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">15</field>
         </record>
 
         <record id="hr_rule_parameter_value_UVT" model="hr.rule.parameter.value">
@@ -831,6 +956,20 @@ Aplica tambien como una situación administrativa por ausencia del trabajador.
             <field name="parameter_value">35607</field>
         </record>
 
+        <record id="hr_rule_parameter_value_max_horas_extra_day" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_max_horas_extra_day"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">2</field>
+        </record>
+
+        <record id="hr_rule_parameter_value_max_horas_extra_semana" model="hr.rule.parameter.value">
+            <field name="rule_parameter_id" ref="hr_rule_parameter_max_horas_extra_semana"/>
+            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
+            <field name="parameter_value">12</field>
+        </record>
+
+        <!-- Reglas Salariales -->
+        <!-- Reglas Salariales -->
         <!-- Reglas Salariales -->
         
         <record id="hr_salary_rule_valor_hora" model="hr.salary.rule">
@@ -867,10 +1006,10 @@ Aplica tambien como una situación administrativa por ausencia del trabajador.
             <field name="appears_on_payslip">1</field>
             <field name="sequence">10</field>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = worked_days.HE
+            <field name="condition_python">result = payslip.total_extras_recargos_hours.total_numero_horas_extras_ordinarias_diurnas > 0
             </field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = categories.SH * payslip.rule_parameter('PHED') * worked_days.HE.numero_horas_extras_ordinarias_diurnas
+            <field name="amount_python_compute">result = categories.SH * payslip.rule_parameter('PHED') * payslip.total_extras_recargos_hours.total_numero_horas_extras_ordinarias_diurnas
             </field>
         </record>
 
@@ -882,10 +1021,10 @@ Aplica tambien como una situación administrativa por ausencia del trabajador.
             <field name="appears_on_payslip">1</field>
             <field name="sequence">11</field>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = worked_days.HE
+            <field name="condition_python">result = payslip.total_extras_recargos_hours.total_numero_horas_extras_ordinarias_nocturnas > 0
             </field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = categories.SH * payslip.rule_parameter('PHEN') * worked_days.HE.numero_horas_extras_ordinarias_nocturnas
+            <field name="amount_python_compute">result = categories.SH * payslip.rule_parameter('PHEN') * payslip.total_extras_recargos_hours.total_numero_horas_extras_ordinarias_nocturnas
             </field>
         </record>
 
@@ -897,10 +1036,10 @@ Aplica tambien como una situación administrativa por ausencia del trabajador.
             <field name="appears_on_payslip">1</field>
             <field name="sequence">12</field>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = worked_days.HE
+            <field name="condition_python">result = payslip.total_extras_recargos_hours.total_numero_horas_extras_festivas_diurnas > 0
             </field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = categories.SH * payslip.rule_parameter('PHEDF') * worked_days.HE.numero_horas_extras_festivas_diurnas
+            <field name="amount_python_compute">result = categories.SH * payslip.rule_parameter('PHEDF') * payslip.total_extras_recargos_hours.total_numero_horas_extras_festivas_diurnas
             </field>
         </record>
 
@@ -912,10 +1051,10 @@ Aplica tambien como una situación administrativa por ausencia del trabajador.
             <field name="appears_on_payslip">1</field>
             <field name="sequence">13</field>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = worked_days.HE
+            <field name="condition_python">result = payslip.total_extras_recargos_hours.total_numero_horas_extras_festivas_nocturnas > 0
             </field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = categories.SH * payslip.rule_parameter('PHENF') * worked_days.HE.numero_horas_extras_festivas_nocturnas
+            <field name="amount_python_compute">result = categories.SH * payslip.rule_parameter('PHENF') * payslip.total_extras_recargos_hours.total_numero_horas_extras_festivas_nocturnas
             </field>
         </record>
 
@@ -985,7 +1124,7 @@ Aplica tambien como una situación administrativa por ausencia del trabajador.
             <field name="appears_on_payslip">1</field>
             <field name="sequence">31</field>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = (2 * payslip.rule_parameter('SM') >= categories.DAA + payslip.rule_parameter('AT')) and (contract.auxilio_transporte or contract.auxilio_conectividad)
+            <field name="condition_python">result = (2 * categories.SMMLV >= DAA) and (contract.auxilio_transporte or contract.auxilio_conectividad)
             </field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = (contract.auxilio_transporte * payslip.rule_parameter('AT')) + (contract.auxilio_conectividad * payslip.rule_parameter('AC'))
@@ -1005,18 +1144,33 @@ Aplica tambien como una situación administrativa por ausencia del trabajador.
             </field>
         </record>
 
-        <record id="hr_salary_rule_prima_servicios" model="hr.salary.rule">
-            <field name="name">Prima de Servicios</field>
+        <record id="hr_salary_rule_primera_prima_servicios" model="hr.salary.rule">
+            <field name="name">Primera Prima de Servicios</field>
             <field name="category_id" ref="hr_salary_rule_category_primas"/>
-            <field name="code">PRI</field>
+            <field name="code">PPRI</field>
             <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
             <field name="appears_on_payslip">1</field>
             <field name="sequence">40</field>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = payslip.prima
+            <field name="condition_python">result = payslip.prima_semestre_1
             </field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = contract.wage * payslip.rule_parameter('PS')
+            <field name="amount_python_compute">result = contract.total_prima_1
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_segunda_prima_servicios" model="hr.salary.rule">
+            <field name="name">Segunda Prima de Servicios</field>
+            <field name="category_id" ref="hr_salary_rule_category_primas"/>
+            <field name="code">SPRI</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="sequence">41</field>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = payslip.prima_semestre_2
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.total_prima_2
             </field>
         </record>
 
@@ -1184,11 +1338,11 @@ Mayor o igual a 20SMMLV: 2,0%
             <field name="condition_python">result = payslip.cesantias
             </field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = contract.wage * payslip.rule_parameter('CES') * 2
+            <field name="amount_python_compute">result = contract.total_cesantias_year
             </field>
         </record>
 
-        <record id="hr_salary_rule_cesantias" model="hr.salary.rule">
+        <record id="hr_salary_rule_intereses_cesantias" model="hr.salary.rule">
             <field name="name">Intereses Cesantias</field>
             <field name="category_id" ref="hr_salary_rule_category_otros_conceptos"/>
             <field name="code">ICE</field>
@@ -1199,7 +1353,7 @@ Mayor o igual a 20SMMLV: 2,0%
             <field name="condition_python">result = payslip.cesantias
             </field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = contract.wage * payslip.rule_parameter('ICE') * 12
+            <field name="amount_python_compute">result = contract.total_vacaciones
             </field>
         </record>
 
@@ -1211,11 +1365,204 @@ Mayor o igual a 20SMMLV: 2,0%
             <field name="appears_on_payslip">1</field>
             <field name="sequence">62</field>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = payslip.cesantias
+            <field name="condition_python">result = payslip.vacaciones
             </field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = contract.wage * payslip.rule_parameter('ICE') * 12
             </field>
+        </record>
+
+        <record id="hr_salary_rule_ingreso_UVT" model="hr.salary.rule">
+            <field name="name">Ingreso en UVTs</field>
+            <field name="category_id" ref="hr_salary_rule_category_otros_conceptos"/>
+            <field name="code">IUVT</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="sequence">63</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = (contract.wage / payslip.rule_parameter('UVT'))
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_retencion_fuente" model="hr.salary.rule">
+            <field name="name">Retención en la Fuente</field>
+            <field name="category_id" ref="hr_salary_rule_category_otros_conceptos"/>
+            <field name="code">RTF</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="sequence">64</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">if 95 >= IUVT:
+    result = 0
+elif 150 >= IUVT > 95:
+    result = (IUVT - 95) * payslip.rule_parameter('UVT') * 0.19
+elif 360 >= IUVT > 150:
+    result = (((IUVT - 150) * 0.28) + 10) * payslip.rule_parameter('UVT')
+elif 640 >= IUVT > 360:
+    result = (((IUVT - 360) * 0.33) + 69) * payslip.rule_parameter('UVT')
+elif 945 >= IUVT > 640:
+    result = (((IUVT - 640) * 0.35) + 162) * payslip.rule_parameter('UVT')
+elif 2300 >= IUVT > 945:
+    result = (((IUVT - 945) * 0.37) + 268) * payslip.rule_parameter('UVT')
+elif IUVT > 2300:
+    result = (((IUVT - 2300) * 0.39) + 770) * payslip.rule_parameter('UVT')
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_libranzas" model="hr.salary.rule">
+            <field name="name">Libranzas</field>
+            <field name="category_id" ref="hr_salary_rule_category_otros_conceptos"/>
+            <field name="code">LIB</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="sequence">65</field>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = contract.libranzas_CCF + contract.libranzas_coperatica + contract.credito_banco > 0
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.libranzas_CCF + contract.libranzas_coperatica + contract.credito_banco
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_embargos_judiciales" model="hr.salary.rule">
+            <field name="name">Embargos Judiciales</field>
+            <field name="category_id" ref="hr_salary_rule_category_otros_conceptos"/>
+            <field name="code">EMJ</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">1</field>
+            <field name="sequence">66</field>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = contract.embargo_judicial > 0
+            </field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.embargo_judicial
+            </field>
+        </record>
+
+        <!-- Tipos de Notificación -->
+        <!-- Tipos de Notificación -->
+        <!-- Tipos de Notificación -->
+
+        <record id="mail_message_subtype_vacaciones" model="mail.message.subtype">
+            <field name="name">Vacaciones</field>
+            <field name="sequence">1</field>
+            <field name="res_model">hr.leave</field>
+            <field name="description">Vacaciones</field>
+            <field name="default">1</field>
+        </record>
+
+        <record id="mail_message_subtype_licencias" model="mail.message.subtype">
+            <field name="name">Licencias</field>
+            <field name="sequence">1</field>
+            <field name="res_model">hr.leave</field>
+            <field name="description">Licencias</field>
+            <field name="default">1</field>
+        </record>
+
+        <record id="mail_message_subtype_permisos" model="mail.message.subtype">
+            <field name="name">Permisos</field>
+            <field name="sequence">1</field>
+            <field name="res_model">hr.leave</field>
+            <field name="description">Permisos</field>
+            <field name="default">1</field>
+        </record>
+
+        <record id="mail_message_subtype_incapacidades" model="mail.message.subtype">
+            <field name="name">Incapacidades</field>
+            <field name="sequence">1</field>
+            <field name="res_model">hr.leave</field>
+            <field name="description">Incapacidades</field>
+            <field name="default">1</field>
+        </record>
+
+        <!-- Tipos de Ausencia -->
+        <!-- Tipos de Ausencia -->
+        <!-- Tipos de Ausencia -->
+
+        <record id="hr_leave_type_vacaciones" model="hr.leave.type">
+            <field name="name">Vacaciones</field>
+            <field name="code">VAC</field>
+            <field name="request_unit">day</field>
+            <field name="allocation_type">no</field>
+            <field name="leave_validation_type">both</field>
+            <field name="responsible_id">1</field>
+            <field name="leave_notif_subtype_id" ref="mail_message_subtype_vacaciones"/>
+            <field name="allocation_notif_subtype_id" ref="mail_message_subtype_vacaciones"/>
+            <field name="create_calendar_meeting">1</field>
+            <field name="color_name">lightblue</field>
+            <field name="work_entry_type_id" ref="hr_work_entry_vacaciones"/>
+        </record>
+
+        <record id="hr_leave_type_licencia_maternidad" model="hr.leave.type">
+            <field name="name">Licencia de Maternidad</field>
+            <field name="code">LIM</field>
+            <field name="request_unit">day</field>
+            <field name="allocation_type">no</field>
+            <field name="leave_validation_type">both</field>
+            <field name="responsible_id">1</field>
+            <field name="leave_notif_subtype_id" ref="mail_message_subtype_licencias"/>
+            <field name="allocation_notif_subtype_id" ref="mail_message_subtype_licencias"/>
+            <field name="create_calendar_meeting">1</field>
+            <field name="color_name">lightblue</field>
+            <field name="work_entry_type_id" ref="hr_work_entry_licencias_remuneradas"/>
+        </record>
+
+        <record id="hr_leave_type_licencia_paternidad" model="hr.leave.type">
+            <field name="name">Licencia de Paternidad o Ley María</field>
+            <field name="code">LIP</field>
+            <field name="request_unit">day</field>
+            <field name="allocation_type">no</field>
+            <field name="leave_validation_type">both</field>
+            <field name="responsible_id">1</field>
+            <field name="leave_notif_subtype_id" ref="mail_message_subtype_licencias"/>
+            <field name="allocation_notif_subtype_id" ref="mail_message_subtype_licencias"/>
+            <field name="create_calendar_meeting">1</field>
+            <field name="color_name">lightblue</field>
+            <field name="work_entry_type_id" ref="hr_work_entry_licencias_remuneradas"/>
+        </record>
+
+        <record id="hr_leave_type_licencia_luto" model="hr.leave.type">
+            <field name="name">Licencia por Luto</field>
+            <field name="code">LIL</field>
+            <field name="request_unit">day</field>
+            <field name="allocation_type">no</field>
+            <field name="leave_validation_type">both</field>
+            <field name="responsible_id">1</field>
+            <field name="leave_notif_subtype_id" ref="mail_message_subtype_licencias"/>
+            <field name="allocation_notif_subtype_id" ref="mail_message_subtype_licencias"/>
+            <field name="create_calendar_meeting">1</field>
+            <field name="color_name">lightblue</field>
+            <field name="work_entry_type_id" ref="hr_work_entry_licencias_remuneradas"/>
+        </record>
+
+        <record id="hr_leave_type_entierro_companero" model="hr.leave.type">
+            <field name="name">Entierro de Compañero</field>
+            <field name="code">ENC</field>
+            <field name="request_unit">day</field>
+            <field name="allocation_type">no</field>
+            <field name="leave_validation_type">both</field>
+            <field name="responsible_id">1</field>
+            <field name="leave_notif_subtype_id" ref="mail_message_subtype_permisos"/>
+            <field name="allocation_notif_subtype_id" ref="mail_message_subtype_permisos"/>
+            <field name="create_calendar_meeting">1</field>
+            <field name="color_name">lightblue</field>
+            <field name="work_entry_type_id" ref="hr_work_entry_permisos_remunerados"/>
+        </record>
+
+        <record id="hr_leave_type_permiso_sindical" model="hr.leave.type">
+            <field name="name">Permiso Sindical</field>
+            <field name="code">ENC</field>
+            <field name="request_unit">day</field>
+            <field name="allocation_type">no</field>
+            <field name="leave_validation_type">both</field>
+            <field name="responsible_id">1</field>
+            <field name="leave_notif_subtype_id" ref="mail_message_subtype_permisos"/>
+            <field name="allocation_notif_subtype_id" ref="mail_message_subtype_permisos"/>
+            <field name="create_calendar_meeting">1</field>
+            <field name="color_name">lightblue</field>
+            <field name="work_entry_type_id" ref="hr_work_entry_permisos_remunerados"/>
         </record>
 
     </data>

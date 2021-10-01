@@ -4,10 +4,16 @@ from odoo import api, fields, models, _
 class HrPayslip(models.Model):
     _inherit = 'hr.payslip'
 
-    prima = fields.Boolean(string='Pago de Prima')
+    prima_semestre_1 = fields.Boolean(string='Pago de Primera Prima')
+    prima_semestre_2 = fields.Boolean(string='Pago de Segunda Prima')
     cesantias = fields.Boolean(string='Pago de Cesantias')
+    vacaciones = fields.Boolean(string='Pago de Vacaciones')
 
     total_extras_recargos_hours = fields.One2many('hr.payslip.total_hours', 'name', string='Total Extras y Recargos', copy=False)
+
+    @api.onchange('contract_id')
+    def set_estructure(self):
+        self.struct_id = self.contract_id.tipo_contrato.id
 
     @api.onchange('date_from','date_to')
     def prima_cesantias(self):
@@ -18,10 +24,13 @@ class HrPayslip(models.Model):
         segunda_prima = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','DSP')],limit=1).parameter_value
         date_segunda_prima = datetime.strptime(segunda_prima + '/' + str(year), '%d/%m/%Y').date()
 
-        if (self.date_from <= date_primera_prima <= self.date_to) or (self.date_from <= date_segunda_prima <= self.date_to):
-            self.prima = True
+        if (self.date_from <= date_primera_prima <= self.date_to):
+            self.prima_semestre_1 = True
+        elif (self.date_from <= date_segunda_prima <= self.date_to):
+            self.prima_semestre_2 = True
         else:
-            self.prima = False
+            self.prima_semestre_1 = False
+            self.prima_semestre_2 = False
 
         fecha_cesantias = self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','FCE')],limit=1).parameter_value
         date_cesantias = datetime.strptime(fecha_cesantias + '/' + str(year), '%d/%m/%Y').date()
@@ -55,7 +64,7 @@ class HrPayslip(models.Model):
         HEDF_number = 0
         HENF_number = 0
 
-        entries = self.env['hr.work.entry'].search([('work_entry_type_id','=',tipo.id)])
+        entries = self.env['hr.work.entry'].search([('work_entry_type_id','=',tipo.id),('employee_id','=',self.employee_id.id)])
 
         for work_entry in entries:
             work_entry_id = self.env['hr.work.entry'].search([('id','=',work_entry.id)])
@@ -126,12 +135,83 @@ class HrPayslip(models.Model):
 
     def compute_sheet(self):     
         res = super(HrPayslip, self).compute_sheet()
-        if True:
-            print("")
-            print("ENTRA")
-            print("")
-        return res
 
+        mes = self.date_from.month
+
+        percentage_prima = float(self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','PS')],limit=1).parameter_value)
+        percentage_cesantias = float(self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','CES')],limit=1).parameter_value)
+        percentage_intereses_cesantias = float(self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','ICE')],limit=1).parameter_value)
+        percentage_vacaciones = float(self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','PVAC')],limit=1).parameter_value)
+
+        
+        if mes == 1:
+            self.contract_id.prima_1 = self.get_devengado() * (percentage_prima/6)
+            self.contract_id.cesantias_1 = self.contract_id.wage * (percentage_cesantias/6)
+            self.contract_id.intereses_cesantias_1 = self.contract_id.cesantias_1 * percentage_intereses_cesantias
+            self.contract_id.vacaciones_1 = self.get_devengado() * percentage_vacaciones
+        if mes == 2:
+            self.contract_id.prima_2 = self.get_devengado() * (percentage_prima/6)
+            self.contract_id.cesantias_2 = self.contract_id.wage * (percentage_cesantias/6)
+            self.contract_id.intereses_cesantias_2 = self.contract_id.cesantias_2 * percentage_intereses_cesantias
+            self.contract_id.vacaciones_2 = self.get_devengado() * percentage_vacaciones
+        if mes == 3:
+            self.contract_id.prima_3 = self.get_devengado() * (percentage_prima/6)
+            self.contract_id.cesantias_3 = self.contract_id.wage * (percentage_cesantias/6)
+            self.contract_id.intereses_cesantias_3 = self.contract_id.cesantias_3 * percentage_intereses_cesantias
+            self.contract_id.vacaciones_3 = self.get_devengado() * percentage_vacaciones
+        if mes == 4:
+            self.contract_id.prima_4 = self.get_devengado() * (percentage_prima/6)
+            self.contract_id.cesantias_4 = self.contract_id.wage * (percentage_cesantias/6)
+            self.contract_id.intereses_cesantias_4 = self.contract_id.cesantias_4 * percentage_intereses_cesantias
+            self.contract_id.vacaciones_4 = self.get_devengado() * percentage_vacaciones
+        if mes == 5:
+            self.contract_id.prima_5 = self.get_devengado() * (percentage_prima/6)
+            self.contract_id.cesantias_5 = self.contract_id.wage * (percentage_cesantias/6)
+            self.contract_id.intereses_cesantias_5 = self.contract_id.cesantias_5 * percentage_intereses_cesantias
+            self.contract_id.vacaciones_5 = self.get_devengado() * percentage_vacaciones
+        if mes == 6:
+            self.contract_id.prima_6 = self.get_devengado() * (percentage_prima/6)
+            self.contract_id.cesantias_6 = self.contract_id.wage * (percentage_cesantias/6)
+            self.contract_id.intereses_cesantias_6 = self.contract_id.cesantias_6 * percentage_intereses_cesantias
+            self.contract_id.vacaciones_6 = self.get_devengado() * percentage_vacaciones
+        if mes == 7:
+            self.contract_id.prima_7 = self.get_devengado() * (percentage_prima/6)
+            self.contract_id.cesantias_7 = self.contract_id.wage * (percentage_cesantias/6)
+            self.contract_id.intereses_cesantias_7 = self.contract_id.cesantias_7 * percentage_intereses_cesantias
+            self.contract_id.vacaciones_7 = self.get_devengado() * percentage_vacaciones
+        if mes == 8:
+            self.contract_id.prima_8 = self.get_devengado() * (percentage_prima/6)
+            self.contract_id.cesantias_8 = self.contract_id.wage * (percentage_cesantias/6)
+            self.contract_id.intereses_cesantias_8 = self.contract_id.cesantias_8 * percentage_intereses_cesantias
+            self.contract_id.vacaciones_8 = self.get_devengado() * percentage_vacaciones
+        if mes == 9:
+            self.contract_id.prima_9 = self.get_devengado() * (percentage_prima/6)
+            self.contract_id.cesantias_9 = self.contract_id.wage * (percentage_cesantias/6)
+            self.contract_id.intereses_cesantias_9 = self.contract_id.cesantias_9 * percentage_intereses_cesantias
+            self.contract_id.vacaciones_9 = self.get_devengado() * percentage_vacaciones
+        if mes == 10:
+            self.contract_id.prima_10 = self.get_devengado() * (percentage_prima/6)
+            self.contract_id.cesantias_10 = self.contract_id.wage * (percentage_cesantias/6)
+            self.contract_id.intereses_cesantias_10 = self.contract_id.cesantias_10 * percentage_intereses_cesantias
+            self.contract_id.vacaciones_10 = self.get_devengado() * percentage_vacaciones
+        if mes == 11:
+            self.contract_id.prima_11 = self.get_devengado() * (percentage_prima/6)
+            self.contract_id.cesantias_11 = self.contract_id.wage * (percentage_cesantias/6)
+            self.contract_id.intereses_cesantias_11 = self.contract_id.cesantias_11 * percentage_intereses_cesantias
+            self.contract_id.vacaciones_11 = self.get_devengado() * percentage_vacaciones
+        if mes == 12:
+            self.contract_id.prima_12 = self.get_devengado() * (percentage_prima/6)
+            self.contract_id.cesantias_12 = self.contract_id.wage * (percentage_cesantias/6)
+            self.contract_id.intereses_cesantias_12 = self.contract_id.cesantias_12 * percentage_intereses_cesantias
+            self.contract_id.vacaciones_12 = self.get_devengado() * percentage_vacaciones
+
+        return res
+    
+    def get_devengado(self):
+        for line in self.line_ids:
+            if line.code == 'DEV':
+                return line.total
+    
 class TotalHoursPayslip(models.Model):
     _name = 'hr.payslip.total_hours'
 
