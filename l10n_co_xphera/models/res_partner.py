@@ -27,29 +27,30 @@ class Partner(models.Model):
         """
         Valida si el nit es correcto.
         """
-        nit = self.vat.replace('-','')
-        nit = nit.strip()
+        if self.vat:
+            nit = self.vat.replace('-','')
+            nit = nit.strip()
 
-        if (self.l10n_latam_identification_type_id.name == 'NIT') and self.vat:
-            if (len(nit) < 9) or (len(nit) > 10):    
-                raise UserError(_("El NIT debe tener 9 dígitos sin incluir el dígito de verificación o 10 dígitos incluyendo el digito de verificación."))
-            
-            if len(nit) == 9:
-                mult = [41,37,29,23,19,17,13,7,3] # multiplicadores
-                v = sum(list(map(lambda x,y: x*y, mult,[int(c) for c in nit])))
-                v = int(v) % 11       
-                if (v >= 2):
-                    v = 11 - v
-                self.vat = nit + "-" + str(v)
-            
-            if len(nit) == 10:
-                mult = [41,37,29,23,19,17,13,7,3] # multiplicadores
-                v = sum(list(map(lambda x,y: x*y, mult,[int(c) for c in nit[:-1]])))
-                v = int(v) % 11      
-                if (v >= 2):
-                    v = 11 - v
-                if str(v) != nit[9]:
-                    raise UserError(_("El dígito de verificación es incorrecto."))
+            if self.l10n_latam_identification_type_id.name == 'NIT':
+                if (len(nit) < 9) or (len(nit) > 10):    
+                    raise UserError(_("El NIT debe tener 9 dígitos sin incluir el dígito de verificación o 10 dígitos incluyendo el digito de verificación."))
+                
+                if len(nit) == 9:
+                    mult = [41,37,29,23,19,17,13,7,3] # multiplicadores
+                    v = sum(list(map(lambda x,y: x*y, mult,[int(c) for c in nit])))
+                    v = int(v) % 11       
+                    if (v >= 2):
+                        v = 11 - v
+                    self.vat = nit + "-" + str(v)
+                
+                if len(nit) == 10:
+                    mult = [41,37,29,23,19,17,13,7,3] # multiplicadores
+                    v = sum(list(map(lambda x,y: x*y, mult,[int(c) for c in nit[:-1]])))
+                    v = int(v) % 11      
+                    if (v >= 2):
+                        v = 11 - v
+                    if str(v) != nit[9]:
+                        raise UserError(_("El dígito de verificación es incorrecto."))
 
         res = super(Partner, self).check_vat()
         return res
@@ -57,8 +58,9 @@ class Partner(models.Model):
     @api.onchange('vat','l10n_latam_identification_type_id')
     def _compute_DV(self):
         self.check_vat()
-        if len(self.vat) == 11:
-            self.DV = float(self.vat[10])
+        if self.vat:
+            if len(self.vat) == 11:
+                self.DV = float(self.vat[10])
         else:
             self.DV = 0
             
