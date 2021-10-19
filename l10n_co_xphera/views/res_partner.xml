@@ -20,7 +20,7 @@
                 <field name="municipio" class="o_municipio" placeholder="Municipio"/>
             </xpath>
             <xpath expr="//field[@name='vat']" position="after">
-                <field name="DV"/>
+                <field name="DV" readonly="1" force_save="1"/>
             </xpath>
         </field>
     </record>

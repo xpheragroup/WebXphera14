@@ -2,7 +2,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import logging
-from odoo import api, fields, models
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError, UserError
 
 class Partner(models.Model):
     _description = "Municipio"
@@ -21,23 +22,45 @@ class Partner(models.Model):
     municipio = fields.Many2one('res.municipio')
     DV = fields.Integer('DV', compute='_compute_DV', help='Dígito de verificación.')
 
-    @api.onchange('vat')
+    @api.constrains('vat', 'country_id')
+    def check_vat(self):
+        """
+        Valida si el nit es correcto.
+        """
+        nit = self.vat.replace('-','')
+        nit = nit.strip()
+
+        if (self.l10n_latam_identification_type_id.name == 'NIT') and self.vat:
+            if (len(nit) < 9) or (len(nit) > 10):    
+                raise UserError(_("El NIT debe tener 9 dígitos sin incluir el dígito de verificación o 10 dígitos incluyendo el digito de verificación."))
+            
+            if len(nit) == 9:
+                mult = [41,37,29,23,19,17,13,7,3] # multiplicadores
+                v = sum(list(map(lambda x,y: x*y, mult,[int(c) for c in nit])))
+                v = int(v) % 11       
+                if (v >= 2):
+                    v = 11 - v
+                self.vat = nit + "-" + str(v)
+            
+            if len(nit) == 10:
+                mult = [41,37,29,23,19,17,13,7,3] # multiplicadores
+                v = sum(list(map(lambda x,y: x*y, mult,[int(c) for c in nit[:-1]])))
+                v = int(v) % 11      
+                if (v >= 2):
+                    v = 11 - v
+                if str(v) != nit[9]:
+                    raise UserError(_("El dígito de verificación es incorrecto."))
+
+        res = super(Partner, self).check_vat()
+        return res
+
+    @api.onchange('vat','l10n_latam_identification_type_id')
     def _compute_DV(self):
-        self.DV = 0
-        '''if int(self.vat[len(self.vat)-1:]):
-            self.DV = int(self.vat[len(self.vat)-1:])
+        self.check_vat()
+        if len(self.vat) == 11:
+            self.DV = float(self.vat[10])
         else:
             self.DV = 0
-        if self.vat:
-            if self.vat.isdigit() and len(self.vat)<16:
-            vpri = [0,3,7,13,17,19,23,29,37,41,43,47,53,59,67,71]
-            x = 0
-            y = 0
-            for i in range(0,len(self.vat)):
-                y = int(self.vat[i])
-                x = x + (y * vpri[len(self.vat)-i])
-                y = x % 11
-            dv = 11 - y if y > 1 else y'''
             
 class AccountChartTemplate(models.Model):
     _inherit = 'account.chart.template'
