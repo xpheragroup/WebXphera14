@@ -33,8 +33,17 @@
                         </group>
                     </group>
                     <group name="embargos" invisible="False">
-                        <group name="embargos_empleado" string="Embargos Judiciales" col="8">
+                        <group name="embargos_empleado" string="Embargos Judiciales">
                             <field name="embargo_judicial"/>
+                        </group>
+                    </group>
+                    <group name="no_salariales" invisible="False">
+                        <group name="pagos_no_salariales" string="Pagos Laborales No Salariales" col="8">
+                            <field name="aux_educacion"/>
+                            <field name="aux_vivienda"/>
+                            <field name="aportes_AFP"/>
+                            <field name="aux_alimentacion"/>
+                            <field name="bonificacion"/>
                         </group>
                     </group>
                     <group name="primas" invisible="False">

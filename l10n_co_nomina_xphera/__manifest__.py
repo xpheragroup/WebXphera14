@@ -20,5 +20,6 @@
         'views/hr_work_entry.xml',
         'views/hr_work_entry_type.xml',
         'views/hr_rule_parameter.xml',
+        'views/hr_leave_type.xml',
     ],
 }

@@ -103,6 +103,12 @@ class HrContract(models.Model):
 
     embargo_judicial = fields.Monetary(string='Embargo Judicial', help='Descuentos aplicados por nomina al trabajador para cancelar sobre actuaciones judiciales debidamente motivadas.')
 
+    aux_educacion = fields.Monetary(string='Auxilio Educación')
+    aux_vivienda = fields.Monetary(string='Auxilio Vivienda')
+    aportes_AFP = fields.Monetary(string='Aportes Voluntarios a AFP')
+    aux_alimentacion = fields.Monetary(string='Auxilio Alimentación')
+    bonificacion = fields.Monetary(string='Bonificaciones')
+
     @api.depends('vacaciones_1','vacaciones_2','vacaciones_3','vacaciones_4','vacaciones_5','vacaciones_6','vacaciones_7','vacaciones_8','vacaciones_9','vacaciones_10','vacaciones_11','vacaciones_12')
     def _compute_total_vacaciones(self):
         self.total_vacaciones = self.vacaciones_1 + self.vacaciones_2 + self.vacaciones_3 + self.vacaciones_4 + self.vacaciones_5 + self.vacaciones_6 + self.vacaciones_7 + self.vacaciones_8 + self.vacaciones_9 + self.vacaciones_10 + self.vacaciones_11 + self.vacaciones_12
@@ -141,16 +147,16 @@ class HrContract(models.Model):
         res = super(HrContract, self).write(vals)
         SMMLV = float(self.env['hr.rule.parameter.value'].search([('rule_parameter_id.code','=','SMMLV')],limit=1).parameter_value)
         
-        if ('tipo_contrato' in vals):
+        if 'tipo_contrato' in vals:
             name_contract = self.env['hr.payroll.structure'].search([('id','=',vals.get('tipo_contrato'))],limit=1).name
 
         if ('wage' in vals) and ('tipo_contrato' in vals):
             if (vals.get('wage') < SMMLV) and (name_contract != 'Contrato de Aprendizaje'):
                 raise UserError(_("El salario no puede ser menor a " + str(SMMLV) + "."))
-        elif ('wage' in vals):
+        elif 'wage' in vals:
             if (vals.get('wage') < SMMLV) and (self.tipo_contrato.name != 'Contrato de Aprendizaje'):
                 raise UserError(_("El salario no puede ser menor a " + str(SMMLV) + "."))
-        elif ('tipo_contrato' in vals):
+        elif 'tipo_contrato' in vals:
             if (self.wage < SMMLV) and (name_contract != 'Contrato de Aprendizaje'):
                 raise UserError(_("El salario no puede ser menor a " + str(SMMLV) + "."))
 

@@ -223,6 +223,11 @@
             <field name="code">SMMLV</field>
         </record>
 
+        <record id="hr_salary_rule_category_horas_laboradas" model="hr.salary.rule.category">
+            <field name="name">Horas Laboradas</field>
+            <field name="code">HL</field>
+        </record>
+
         <record id="hr_salary_rule_category_horas_extra" model="hr.salary.rule.category">
             <field name="name">Horas Extra</field>
             <field name="code">HE</field>
@@ -621,13 +626,6 @@ Aplica tambien como una situación administrativa por ausencia del trabajador.
             </field>
         </record>
 
-        <record id="hr_rule_parameter_dias_vacaciones" model="hr.rule.parameter">
-            <field name="name">Dias Vacaciones</field>
-            <field name="code">DVAC</field>
-            <field name="description">Son 15 días hábiles continuos por año.
-            </field>
-        </record>
-
         <record id="hr_rule_parameter_UVT" model="hr.rule.parameter">
             <field name="name">UVT</field>
             <field name="code">UVT</field>
@@ -962,12 +960,6 @@ Aplica tambien como una situación administrativa por ausencia del trabajador.
             <field name="parameter_value">0.0417</field>
         </record>
 
-        <record id="hr_rule_parameter_value_dias_vacaciones" model="hr.rule.parameter.value">
-            <field name="rule_parameter_id" ref="hr_rule_parameter_dias_vacaciones"/>
-            <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
-            <field name="parameter_value">15</field>
-        </record>
-
         <record id="hr_rule_parameter_value_UVT" model="hr.rule.parameter.value">
             <field name="rule_parameter_id" ref="hr_rule_parameter_UVT"/>
             <field name="date_from" eval="datetime(2021, 1, 1).date()"/>
@@ -1013,6 +1005,19 @@ Aplica tambien como una situación administrativa por ausencia del trabajador.
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = payslip.rule_parameter('SMMLV')
+            </field>
+        </record>
+
+        <record id="hr_salary_rule_horas_laboradas" model="hr.salary.rule">
+            <field name="name">Horas Laboradas</field>
+            <field name="category_id" ref="hr_salary_rule_category_horas_laboradas"/>
+            <field name="code">HL</field>
+            <field name="struct_id" ref="hr_payroll_structure_obra_labor"/>
+            <field name="appears_on_payslip">0</field>
+            <field name="sequence">3</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = worked_days.GEN * SH
             </field>
         </record>
 
@@ -1511,12 +1516,15 @@ elif IUVT > 2300:
             <field name="create_calendar_meeting">1</field>
             <field name="color_name">lightblue</field>
             <field name="work_entry_type_id" ref="hr_work_entry_vacaciones"/>
+            <field name="limite">1</field>
+            <field name="cantidad_limite">15</field>
+            <field name="notas">Las vacaciones deben ser 15 días hábiles continuos.</field>
         </record>
 
         <record id="hr_leave_type_licencia_maternidad" model="hr.leave.type">
             <field name="name">Licencia de Maternidad</field>
             <field name="code">LIM</field>
-            <field name="request_unit">day</field>
+            <field name="request_unit">semana</field>
             <field name="allocation_type">no</field>
             <field name="leave_validation_type">both</field>
             <field name="responsible_id">1</field>
@@ -1525,12 +1533,17 @@ elif IUVT > 2300:
             <field name="create_calendar_meeting">1</field>
             <field name="color_name">lightblue</field>
             <field name="work_entry_type_id" ref="hr_work_entry_licencias_remuneradas"/>
+            <field name="limite">18</field>
+            <field name="cantidad_limite">15</field>
+            <field name="notas">Repartidas de la siguiente manera:
+1. Entre 1 y 2 semanas de preparto.
+2. 16 o 17 semanas de postparto.</field>
         </record>
 
         <record id="hr_leave_type_licencia_paternidad" model="hr.leave.type">
             <field name="name">Licencia de Paternidad o Ley María</field>
             <field name="code">LIP</field>
-            <field name="request_unit">day</field>
+            <field name="request_unit">semana</field>
             <field name="allocation_type">no</field>
             <field name="leave_validation_type">both</field>
             <field name="responsible_id">1</field>
@@ -1539,6 +1552,9 @@ elif IUVT > 2300:
             <field name="create_calendar_meeting">1</field>
             <field name="color_name">lightblue</field>
             <field name="work_entry_type_id" ref="hr_work_entry_licencias_remuneradas"/>
+            <field name="limite">1</field>
+            <field name="cantidad_limite">2</field>
+            <field name="notas"></field>
         </record>
 
         <record id="hr_leave_type_licencia_luto" model="hr.leave.type">
@@ -1553,12 +1569,16 @@ elif IUVT > 2300:
             <field name="create_calendar_meeting">1</field>
             <field name="color_name">lightblue</field>
             <field name="work_entry_type_id" ref="hr_work_entry_licencias_remuneradas"/>
+            <field name="limite">1</field>
+            <field name="cantidad_limite">5</field>
+            <field name="notas">Aplica para los siguientes casos:
+Fallecimiento del conyuge, compañero(a) permanente, o cualquier familiar hasta segundo grado de consanguinidad y primero de afinidad o civil.</field>
         </record>
 
         <record id="hr_leave_type_entierro_companero" model="hr.leave.type">
             <field name="name">Entierro de Compañero</field>
             <field name="code">ENC</field>
-            <field name="request_unit">day</field>
+            <field name="request_unit">hour</field>
             <field name="allocation_type">no</field>
             <field name="leave_validation_type">both</field>
             <field name="responsible_id">1</field>
@@ -1567,12 +1587,16 @@ elif IUVT > 2300:
             <field name="create_calendar_meeting">1</field>
             <field name="color_name">lightblue</field>
             <field name="work_entry_type_id" ref="hr_work_entry_permisos_remunerados"/>
+            <field name="limite">0</field>
+            <field name="cantidad_limite">0</field>
+            <field name="notas">El empleador debe otorgar permisos a los trabajadores que deseen asistir al entierro de uno de sus compañeros de trabajo.
+Este permiso no debe afectar la operatividad de la empresa.</field>
         </record>
 
         <record id="hr_leave_type_permiso_sindical" model="hr.leave.type">
             <field name="name">Permiso Sindical</field>
             <field name="code">ENC</field>
-            <field name="request_unit">day</field>
+            <field name="request_unit">hour</field>
             <field name="allocation_type">no</field>
             <field name="leave_validation_type">both</field>
             <field name="responsible_id">1</field>
@@ -1581,6 +1605,11 @@ elif IUVT > 2300:
             <field name="create_calendar_meeting">1</field>
             <field name="color_name">lightblue</field>
             <field name="work_entry_type_id" ref="hr_work_entry_permisos_remunerados"/>
+            <field name="limite">0</field>
+            <field name="cantidad_limite">0</field>
+            <field name="notas">El estado obliga al empleador a que les permita a los trabajadores sindicalizados que, dentro de la jornada laboral, asistan a reuniones o actividades de sindicato.
+Siempre y cuando la empresa cuente con sindicato.
+            </field>
         </record>
 
         <record id="hr_leave_type_cargo_oficial" model="hr.leave.type">
@@ -1595,12 +1624,15 @@ elif IUVT > 2300:
             <field name="create_calendar_meeting">1</field>
             <field name="color_name">lightblue</field>
             <field name="work_entry_type_id" ref="hr_work_entry_permisos_remunerados"/>
+            <field name="limite">1</field>
+            <field name="cantidad_limite">1</field>
+            <field name="notas">Entendiendose cuando el trabajador funje como Jurado de votación, tiene hasta 45 días a partir de la fecha de la votación para solicitar ese permiso.</field>
         </record>
 
         <record id="hr_leave_type_voto" model="hr.leave.type">
             <field name="name">Permiso por Ejercicio al Derecho al Voto</field>
             <field name="code">PEDV</field>
-            <field name="request_unit">day</field>
+            <field name="request_unit">half_day</field>
             <field name="allocation_type">no</field>
             <field name="leave_validation_type">both</field>
             <field name="responsible_id">1</field>
@@ -1609,6 +1641,9 @@ elif IUVT > 2300:
             <field name="create_calendar_meeting">1</field>
             <field name="color_name">lightblue</field>
             <field name="work_entry_type_id" ref="hr_work_entry_permisos_remunerados"/>
+            <field name="limite">1</field>
+            <field name="cantidad_limite">1</field>
+            <field name="notas">Tiene derecho a medio día. El trabajador ejerció su derecho al voto y esto es debidamente comprobable mostrando el certificado electoral de votación, tiene hasta 30 días a partir de la fecha de la votación para solicitar este permiso.</field>
         </record>
 
         <record id="hr_leave_type_calamidad" model="hr.leave.type">
@@ -1623,6 +1658,11 @@ elif IUVT > 2300:
             <field name="create_calendar_meeting">1</field>
             <field name="color_name">lightblue</field>
             <field name="work_entry_type_id" ref="hr_work_entry_permisos_remunerados"/>
+            <field name="limite">0</field>
+            <field name="cantidad_limite">0</field>
+            <field name="notas">Durante el tiempo que le permita al trabajador sobrellevar la situación.
+Debe ser demostrable.
+            </field>
         </record>
 
         <record id="hr_leave_type_incapacidad_general" model="hr.leave.type">
@@ -1637,6 +1677,14 @@ elif IUVT > 2300:
             <field name="create_calendar_meeting">1</field>
             <field name="color_name">lightblue</field>
             <field name="work_entry_type_id" ref="hr_work_entry_incapacidad_general"/>
+            <field name="limite">0</field>
+            <field name="cantidad_limite">0</field>
+            <field name="notas">Se pagará de la siguente manera:
+- En el caso de incapacidad pór enfemedad común:
+Dias 1 a 2 lo asume la empresa.
+Dias 3 hasta 90 la EPS paga el 66.66% del salario a la compañía.
+Dias 90 hasta 180 la EPS paga el 50% del salario a la compañía.
+Desde el día 180 los costos los asume el AFP, se debe evaluar si se requiere rehabilitación y/o pensión por invalidez.</field>
         </record>
 
         <record id="hr_leave_type_incapacidad_laboral" model="hr.leave.type">
@@ -1651,6 +1699,10 @@ elif IUVT > 2300:
             <field name="create_calendar_meeting">1</field>
             <field name="color_name">lightblue</field>
             <field name="work_entry_type_id" ref="hr_work_entry_incapacidad_laboral"/>
+            <field name="limite">0</field>
+            <field name="cantidad_limite">0</field>
+            <field name="notas">- Para el caso de Enfermedad Laboral:
+La ARL asume el pago total (100%) por 180 días prorrogables por otro periodo equivalente. Posterior a estos periodos se evaluará si requiere la pensión por invalidez.</field>
         </record>
 
         <record id="hr_leave_type_calamidad_domestica" model="hr.leave.type">
@@ -1665,6 +1717,9 @@ elif IUVT > 2300:
             <field name="create_calendar_meeting">1</field>
             <field name="color_name">lightblue</field>
             <field name="work_entry_type_id" ref="hr_work_entry_licencias_no_remuneradas"/>
+            <field name="limite">0</field>
+            <field name="cantidad_limite">0</field>
+            <field name="notas">Debidamente comprobada.</field>
         </record>
 
         <record id="hr_leave_type_citas_medicas_odontologicas" model="hr.leave.type">
@@ -1679,6 +1734,9 @@ elif IUVT > 2300:
             <field name="create_calendar_meeting">1</field>
             <field name="color_name">lightblue</field>
             <field name="work_entry_type_id" ref="hr_work_entry_licencias_no_remuneradas"/>
+            <field name="limite">0</field>
+            <field name="cantidad_limite">0</field>
+            <field name="notas"></field>
         </record>
 
         <record id="hr_leave_type_fuerza_mayor" model="hr.leave.type">
@@ -1693,6 +1751,9 @@ elif IUVT > 2300:
             <field name="create_calendar_meeting">1</field>
             <field name="color_name">lightblue</field>
             <field name="work_entry_type_id" ref="hr_work_entry_licencias_no_remuneradas"/>
+            <field name="limite">0</field>
+            <field name="cantidad_limite">0</field>
+            <field name="notas"></field>
         </record>
 
         <record id="hr_leave_type_personal" model="hr.leave.type">
@@ -1707,6 +1768,9 @@ elif IUVT > 2300:
             <field name="create_calendar_meeting">1</field>
             <field name="color_name">lightblue</field>
             <field name="work_entry_type_id" ref="hr_work_entry_licencias_no_remuneradas"/>
+            <field name="limite">0</field>
+            <field name="cantidad_limite">0</field>
+            <field name="notas"></field>
         </record>
 
     </data>
