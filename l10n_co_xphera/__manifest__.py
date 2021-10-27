@@ -10,6 +10,8 @@
         'base',
         'base_setup',
         'account',
+        'contacts',
+        'base_vat',
     ],
     'data': [
         'data/l10n_co_xphera_chart_data.xml',

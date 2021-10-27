@@ -21,6 +21,12 @@ class Partner(models.Model):
 
     municipio = fields.Many2one('res.municipio')
     DV = fields.Integer('DV', compute='_compute_DV', help='Dígito de verificación.')
+    name_identification = fields.Char('Nombre Tipo de Identificación', compute='_name_identification')
+    
+    @api.onchange('l10n_latam_identification_type_id')
+    def _name_identification(self):
+        if self.l10n_latam_identification_type_id.name:
+            self.name_identification = self.l10n_latam_identification_type_id.name
 
     @api.constrains('vat', 'country_id')
     def check_vat(self):
@@ -61,8 +67,11 @@ class Partner(models.Model):
         if self.vat:
             if len(self.vat) == 11:
                 self.DV = float(self.vat[10])
+            else:
+                self.DV = 0
         else:
             self.DV = 0
+
             
 class AccountChartTemplate(models.Model):
     _inherit = 'account.chart.template'

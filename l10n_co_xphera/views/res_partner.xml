@@ -20,7 +20,8 @@
                 <field name="municipio" class="o_municipio" placeholder="Municipio"/>
             </xpath>
             <xpath expr="//field[@name='vat']" position="after">
-                <field name="DV" readonly="1" force_save="1"/>
+                <field name="name_identification" invisible="1"/>
+                <field name="DV" readonly="1" force_save="1" attrs="{'invisible': [('name_identification','!=','NIT')]}"/>
             </xpath>
         </field>
     </record>
