@@ -38,8 +38,9 @@ class Partner(models.Model):
             nit = nit.strip()
 
             if self.l10n_latam_identification_type_id.name == 'NIT':
-                if (len(nit) < 9) or (len(nit) > 10):    
-                    raise UserError(_("El NIT debe tener 9 dígitos sin incluir el dígito de verificación o 10 dígitos incluyendo el digito de verificación."))
+                if (len(nit) < 9) or (len(nit) > 10):  
+                    print("")
+                    #raise UserError(_("El NIT debe tener 9 dígitos sin incluir el dígito de verificación o 10 dígitos incluyendo el digito de verificación."))
                 
                 if len(nit) == 9:
                     mult = [41,37,29,23,19,17,13,7,3] # multiplicadores
