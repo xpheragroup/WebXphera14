@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--<record id="action_move_exogenous_information" model="ir.actions.act_window">
+        <field name="name">Exogenas</field>
+        <field name="res_model">account.exogenous</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Create a customer invoice
+            </p><p>
+            Create invoices, register payments and keep track of the discussions with your customers.
+            </p>
+        </field>
+    </record>-->
+    
+
+    <!-- Top menu item -->
+    <menuitem id="menu_exogenas" name="Exogenas" sequence="10">
+        <!--<menuitem id="menu_action_move_exogenous_information" action="action_move_exogenous_information" sequence="1"/>
+        <field name="parent_id" ref="account.menu_accounting"/>-->
+    </menuitem>
+
+</odoo>
