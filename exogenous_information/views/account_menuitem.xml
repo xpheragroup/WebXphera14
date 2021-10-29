@@ -2,7 +2,7 @@
 <odoo>
 
     <record id="action_exogenous_information" model="ir.actions.act_window">
-        <field name="name">Exogenas</field>
+        <field name="name">Exógenas</field>
         <field name="res_model">account.exogenous</field>
         <field name="view_mode">tree,kanban,form</field>
         <field name="help" type="html">
@@ -14,7 +14,7 @@
         </field>
     </record>
 
-    <menuitem id="menu_exogenas" name="Exogenas" parent="account_accountant.menu_accounting">
+    <menuitem id="menu_exogenas" name="Exógenas" parent="account_accountant.menu_accounting">
         <menuitem id="menu_exogenous_information" name="Exogenas" action="action_exogenous_information" sequence="0"/>
     </menuitem>
 

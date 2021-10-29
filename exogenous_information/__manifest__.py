@@ -6,11 +6,14 @@
     'description': 'Información Exogena (Xphera)',
     'author': 'Xphera Group S.A.S.',
     'website': 'http://xphera.co',
-    'depends': ['account', 'account_reports',
+    'depends': ['base', 'account', 'account_reports',
     ],
     'data': [
         'views/account_menuitem.xml',
+        'views/account_exogenous.xml',
         'views/res_partner.xml',
         'views/account_account.xml',
+        'data/account.exogenous.formats.csv',
+        'reports/exogenous_report.xml',
     ],
 }
