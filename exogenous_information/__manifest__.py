@@ -13,6 +13,7 @@
         'views/account_exogenous.xml',
         'views/res_partner.xml',
         'views/account_account.xml',
+        'views/l10n_latam_identification_type.xml',
         'data/account.exogenous.formats.csv',
         'reports/exogenous_report.xml',
     ],
