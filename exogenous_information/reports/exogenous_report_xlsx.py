@@ -2,7 +2,7 @@ from odoo import models, fields, api
 
 class ExogenousReportXlsx(models.AbstractModel):
     _name = 'report.exogenous_information.reporte_exogena_xlsx'
-    _inherit = 'report.report_xlsx.abstract'
+    #_inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, lines):
         format1 = workbook.add_format({'font_size':10, 'align':'vcenter','bold':True})
