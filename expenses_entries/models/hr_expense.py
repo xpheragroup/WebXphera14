@@ -8,7 +8,7 @@ class HrExpense(models.Model):
 
     _inherit = "hr.expense"
 
-    partner_id = fields.Many2one('res.partner', string='Proveedor')
+    partner_id = fields.Many2one('res.partner', string='Proveedor', required='True')
 
     def action_move_create(self):
         '''
@@ -29,7 +29,8 @@ class HrExpense(models.Model):
             for line in move_line_values:
                 account_tax = self.env['account.tax'].search([('invoice_repartition_line_ids.account_id','=',line['account_id'])])
                 account_tax_rec = self.env['account.tax'].search([('refund_repartition_line_ids.account_id','=',line['account_id'])])
-                if account_tax or account_tax_rec:
+                
+                if account_tax or account_tax_rec or (self.product_id.property_account_expense_id.id == line['account_id']):
                     line['partner_id'] = self.partner_id.id
 
             # link move lines to move, and move to expense sheet
