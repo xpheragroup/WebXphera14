@@ -27,10 +27,11 @@ class HrExpense(models.Model):
 
             # cambia el tercero del asiento contable en el caso que se requiera
             for line in move_line_values:
+                account_product = self.env['hr.expense'].search([('product_id.property_account_expense_id.id','=',line['account_id'])])
                 account_tax = self.env['account.tax'].search([('invoice_repartition_line_ids.account_id','=',line['account_id'])])
                 account_tax_rec = self.env['account.tax'].search([('refund_repartition_line_ids.account_id','=',line['account_id'])])
-                
-                if account_tax or account_tax_rec or (self.product_id.property_account_expense_id.id == line['account_id']):
+
+                if account_tax or account_tax_rec or account_product:
                     line['partner_id'] = self.partner_id.id
 
             # link move lines to move, and move to expense sheet
