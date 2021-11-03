@@ -8,7 +8,21 @@ class ExogenousReportXlsx(models.AbstractModel):
         format1 = workbook.add_format({'font_size':10, 'align':'vcenter','bold':True})
         format2 = workbook.add_format({'font_size':10, 'align':'vcenter',})
         format3 = workbook.add_format({'font_size':10, 'align':'left','num_format': 'dd/mm/yy hh:mm'})
-        sheet = workbook.add_worksheet('Requisición Interna')
+        
+        
+        sheet = workbook.add_worksheet('1001')
+        sheet.set_column(3,3,50)
+        sheet.set_column(2,2,50)
+
+        sheet.write(2,2,'Requisición',format1)
+        sheet.write(3,2,'Descripción',format1)
+        sheet.write(3,2,lines.name,format1)
+        sheet = workbook.add_worksheet('1003')
+        sheet.set_column(3,3,50)
+        sheet.set_column(2,2,50)
+        sheet.write(2,2,'Requisición',format1)
+        sheet.write(3,2,'Descripción',format1)
+        sheet = workbook.add_worksheet('1004')
         sheet.set_column(3,3,50)
         sheet.set_column(2,2,50)
         sheet.write(2,2,'Requisición',format1)
