@@ -67,7 +67,10 @@ class Partner(models.Model):
         self.check_vat()
         if self.vat:
             if len(self.vat) == 11:
-                self.DV = float(self.vat[10])
+                if self.vat[10]:
+                    self.DV = float(self.vat[10])
+                else:
+                    self.DV = 0
             else:
                 self.DV = 0
         else:
