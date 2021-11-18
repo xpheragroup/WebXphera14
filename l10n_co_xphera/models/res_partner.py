@@ -65,17 +65,16 @@ class Partner(models.Model):
     @api.onchange('vat','l10n_latam_identification_type_id')
     def _compute_DV(self):
         self.check_vat()
-        if self.vat:
+        if self.vat and self.l10n_latam_identification_type_id.name == 'NIT':
             if len(self.vat) == 11:
-                if self.vat[10]:
-                    self.DV = float(self.vat[10])
-                else:
+                if self.vat[10] == ' ':
                     self.DV = 0
+                else:
+                    self.DV = float(self.vat[10])
             else:
                 self.DV = 0
         else:
             self.DV = 0
-
             
 class AccountChartTemplate(models.Model):
     _inherit = 'account.chart.template'
